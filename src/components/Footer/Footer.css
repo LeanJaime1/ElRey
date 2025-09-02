@@ -1,0 +1,115 @@
+/* --- Estilo Principal del Footer --- */
+.footer {
+  background-color: #222; /* Fondo oscuro */
+  color: #ccc; /* Color de texto claro */
+  padding: 3rem 2rem 0 2rem; /* Más padding superior, sin padding inferior */
+  font-family: 'Poppins', sans-serif;
+}
+
+.footer-main-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+  flex-wrap: wrap; /* Permite que las columnas se reorganicen */
+}
+
+/* --- Estilo de las Columnas --- */
+.footer-column {
+  flex: 1; /* Cada columna intenta ocupar el mismo espacio */
+  min-width: 220px; /* Ancho mínimo para cada columna */
+}
+
+.footer-column.brand {
+  flex-basis: 35%; /* La columna del logo puede ser un poco más ancha */
+}
+
+.footer-column h4 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.footer-logo {
+  /* --- AJUSTE AQUÍ --- */
+  width: 180px; /* Aumentado de 150px a 180px */
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.footer-slogan {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  max-width: 250px;
+}
+
+/* --- Estilo de los Enlaces de Navegación --- */
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.75rem;
+}
+
+.footer-links a {
+  color: #ccc;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: white;
+}
+
+/* --- Estilo de los Íconos Sociales --- */
+.social-icons {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.social-icons a {
+  color: #ccc;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #ec1818; /* Tu color de marca */
+  transform: scale(1.1);
+}
+
+/* --- Barra Inferior del Copyright --- */
+.footer-bottom-bar {
+  border-top: 1px solid #444; /* Línea divisoria */
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
+.footer-copy {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #888;
+}
+
+/* --- Responsive para Mobile --- */
+@media (max-width: 768px) {
+  .footer-main-content {
+    flex-direction: column; /* Apila las columnas */
+    text-align: center;
+    align-items: center;
+  }
+  
+  .footer-slogan {
+    max-width: 100%;
+  }
+
+  .social-icons {
+    justify-content: center; /* Centra los íconos */
+  }
+}

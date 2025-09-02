@@ -1,0 +1,228 @@
+.hero {
+  position: relative;
+  width: 100%;
+  height: calc(85vh - 80px);
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+}
+
+.hero-slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  z-index: 1;
+  /* Añadido para centrar el contenido flex */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Capa oscura (Overlay) para mejorar legibilidad */
+.hero-slide::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+.hero-text {
+  /* Eliminadas propiedades de posicionamiento absoluto y transform */
+  position: relative; /* Cambiado a relative o eliminado si no es necesario */
+  top: auto;
+  left: auto;
+  transform: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.7);
+  width: 90vw;
+  max-width: 900px;
+  padding: 0 1rem;
+  box-sizing: border-box;
+  z-index: 2;
+  /* Centrado ya lo maneja el .hero-slide padre con flexbox */
+}
+
+.hero-text h1 {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  white-space: nowrap;
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.hero-text p {
+  font-size: 1.7rem;
+  margin-top: 1rem;
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+.hero-btn {
+  background-color: #ec1818;
+  color: white;
+  padding: 0.9rem 2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+  border: 2px solid #ec1818;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: inline-block;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-btn:hover {
+  background-color: white;
+  color: #ec1818;
+  border: none;
+  text-shadow: none;
+}
+
+.hero-dots {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 10;
+}
+
+.hero-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.hero-dot.active {
+  background: white;
+}
+
+/* ----------------------- */
+/* Mobile */
+@media (max-width: 768px) {
+  .hero {
+    height: 450px;
+  }
+
+  /* Centrado en mobile ya lo maneja .hero-slide */
+  .hero-slide {
+    background-position: center;
+  }
+
+  .hero-text {
+    width: 95vw;
+    padding: 0 0.5rem;
+  }
+
+  .hero-text h1 {
+    font-size: 2rem;
+    white-space: normal;
+    margin-bottom: 0.8rem;
+    line-height: 1.1;
+  }
+
+  .hero-text p {
+    display: block;
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .hero-btn {
+    padding: 0.7rem 1.6rem;
+    font-size: 0.9rem;
+    margin-top: 0;
+  }
+
+  .hero-dots {
+    bottom: 15px;
+    gap: 8px;
+  }
+
+  .hero-dot {
+    width: 9px;
+    height: 9px;
+  }
+}
+
+/* ... (todos tus estilos anteriores van aquí) ... */
+
+/* ----------------------- */
+/* Estilos para las flechas de navegación */
+.hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10; /* Mismo z-index que los dots para estar por encima */
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.hero-arrow:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.hero-arrow.left {
+  left: 20px;
+}
+
+.hero-arrow.right {
+  right: 20px;
+}
+
+/* Ajustes para las flechas en Mobile */
+@media (max-width: 768px) {
+  .hero-arrow {
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+  }
+  
+  .hero-arrow.left {
+    left: 10px;
+  }
+
+  .hero-arrow.right {
+    right: 10px;
+  }
+  
+  /* ... (el resto de tus media queries) ... */
+}

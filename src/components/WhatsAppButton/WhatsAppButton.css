@@ -1,0 +1,25 @@
+.whatsapp-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25d366;
+  color: white;
+  font-size: 0; /* Oculta texto si lo hubiera, solo se ve el svg */
+  padding: 0.6rem;
+  border-radius: 50%;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;  /* tamaño fijo para botón */
+  height: 48px;
+}
+
+.whatsapp-button svg {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: block;
+  color: white; /* asegúrate que el icono sea blanco */
+}

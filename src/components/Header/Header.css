@@ -1,0 +1,181 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: white;
+  z-index: 2000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  margin: 0;
+  height: 80px;
+  box-sizing: border-box;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  /* --- CORRECCIÓN 1: Z-INDEX ELIMINADO --- */
+  /* Se elimina el z-index para que el menú se deslice por encima del logo */
+}
+
+.logo-img {
+  max-height: 70px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 3rem;
+  align-items: center;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.2s ease;
+  cursor: pointer;
+  position: relative;
+  padding: 0.5rem 0;
+}
+
+.nav a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #e91e63;
+  transition: width 0.3s ease;
+}
+
+.nav a:hover::after {
+  width: 100%;
+}
+
+.nav a:hover {
+  color: #333;
+}
+
+.hamburger {
+  /* En desktop, la hamburguesa no se muestra */
+  display: none;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2050; 
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+
+/* --- ESTILOS DEL MENÚ MOBILE REDISEÑADO --- */
+@media (max-width: 768px) {
+  .nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px; 
+    max-width: 80%;
+    height: 100vh;
+    background: white;
+    box-shadow: -4px 0 15px rgba(0,0,0,0.1);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 0;
+    padding-top: 100px;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 2100;
+  }
+
+  .nav.open {
+    transform: translateX(0);
+  }
+  
+  .backdrop {
+    pointer-events: none;
+  }
+  .nav.open + .hamburger + .backdrop,
+  .header > .backdrop {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav a {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+    padding: 1rem 2rem;
+    width: 100%;
+    box-sizing: border-box;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .nav a:first-child {
+    border-top: 1px solid #f0f0f0;
+  }
+
+  .nav a:hover {
+    background-color: #f7f7f7;
+    color: #e91e63;
+  }
+
+  .nav a::after {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 25px;
+    height: 22px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    position: fixed;
+    top: calc(40px - 11px);
+    right: 2rem;
+    /* --- CORRECCIÓN 2: Z-INDEX MOVIDO AQUÍ --- */
+    z-index: 2200; /* El z-index solo es necesario cuando la hamburguesa es visible */
+  }
+
+  .hamburger .bar {
+    width: 100%;
+    height: 3px;
+    background-color: #333;
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .hamburger.open .bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 6px);
+  }
+
+  .hamburger.open .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.open .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -6px);
+  }
+}

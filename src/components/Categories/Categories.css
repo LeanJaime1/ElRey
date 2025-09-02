@@ -1,0 +1,176 @@
+.categories-wrapper {
+  padding: 0 1rem;
+  width: 100%; /* Asegura que el contenedor ocupe todo el ancho */
+  box-sizing: border-box;
+}
+
+.categories-title {
+  margin-top: 80px;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+}
+
+/* --- Container for Desktop View --- */
+.categories-container {
+  display: flex;
+  flex-direction: row; /* Asegura la dirección horizontal */
+  justify-content: center;
+  align-items: center; 
+  gap: 20px;
+  padding: 2rem 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  flex-wrap: nowrap; /* Impide que los elementos salten a la siguiente línea */
+  overflow-x: auto; /* Si no entran, permite scroll horizontal (mejor que se rompa el layout) */
+}
+
+/* --- ESTILOS BASE (PARA WEB) --- */
+.category-card {
+  position: relative;
+  flex-shrink: 0; /* Impide que las tarjetas se encojan */
+  width: 400px; /* Ancho fijo para cada tarjeta */
+  height: 600px;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.category-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+  display: block;
+}
+
+/* --- CAMBIO PRINCIPAL: Nuevo diseño del Overlay y Texto --- */
+.category-card .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex; /* Usamos flex para posicionar el span */
+  
+  /* Por defecto, alineado abajo */
+  justify-content: center;
+  align-items: flex-end; /* Lo alinea abajo */
+
+  /* Gradiente oscuro en la parte inferior para legibilidad */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 40%);
+  
+  /* Transiciones para el fondo y el texto */
+  transition: background-color 0.4s ease, align-items 0.4s ease;
+}
+
+.category-card .overlay span {
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  padding: 1.5rem; /* Espaciado inferior */
+  
+  /* Estilos por defecto (texto pequeño) */
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+
+  /* Transición para el tamaño y peso de la fuente */
+  transition: font-size 0.4s ease, font-weight 0.4s ease, letter-spacing 0.4s ease;
+}
+
+/* --- EFECTO HOVER --- */
+.category-card:hover img {
+  transform: scale(1.1);
+}
+
+.category-card:hover .overlay {
+  /* El overlay se vuelve rojo sólido */
+  background-color: rgba(230, 47, 47, 0.85);
+  /* El texto se centra verticalmente */
+  align-items: center;
+}
+
+.category-card:hover .overlay span {
+  /* El texto crece al tamaño que tenías antes */
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+/* --- Responsive para mobile (COVER FLOW) --- */
+@media (max-width: 768px) {
+  .categories-container {
+    padding: 2rem 0;
+    perspective: 1000px;
+    overflow-x: hidden; /* Ocultamos el scroll en mobile */
+  }
+
+  .mobile-carousel-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 450px;
+  }
+  
+  .category-card {
+    position: absolute;
+    flex-shrink: 1; /* Permitimos que se encoja en mobile si es necesario */
+    width: 65vw;
+    height: 400px;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease, z-index 0.5s;
+  }
+
+  /* El gradiente por defecto se ve bien en mobile */
+  .category-card .overlay {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 50%);
+  }
+
+  /* El texto por defecto es más pequeño en mobile */
+  .category-card .overlay span {
+    font-size: 1.2rem;
+    padding: 1rem;
+  }
+
+  .category-card.middle {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+    z-index: 10;
+  }
+  
+  .category-card.left {
+    transform: translateX(-45%) scale(0.8) rotateY(45deg);
+    opacity: 0.6;
+    z-index: 5;
+  }
+
+  .category-card.right {
+    transform: translateX(45%) scale(0.8) rotateY(-45deg);
+    opacity: 0.6;
+    z-index: 5;
+  }
+  
+  /* En mobile, la tarjeta central siempre tiene el efecto "hover" */
+  .category-card.middle .overlay {
+    background-color: rgba(230, 47, 47, 0.85);
+    align-items: center;
+  }
+  
+  .category-card.middle .overlay span {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    font-weight: 700;
+  }
+}
