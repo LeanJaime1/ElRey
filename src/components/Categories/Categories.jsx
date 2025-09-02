@@ -20,30 +20,33 @@ const Categories = ({ categories, setSelectedCategory }) => {
   const { width } = useWindowSize();
   const isMobile = width <= 768;
 
-  // --- NUEVOS ESTADOS PARA MANEJAR EL SWIPE ---
+  // --- ESTADOS PARA MANEJAR EL SWIPE ---
   const [touchStartX, setTouchStartX] = useState(0);
   const [touchEndX, setTouchEndX] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
 
   // Lógica para seleccionar una categoría y hacer scroll.
   const handleCategorySelection = (categoryName) => {
-    setSelectedCategory((prev) =>
-      prev === categoryName ? null : categoryName
-    );
-    // Lógica de scroll
-    setTimeout(() => {
-      const catalogSection = document.getElementById("catalogo");
-      if (catalogSection) {
-        const headerOffset = 80;
-        const elementPosition = catalogSection.getBoundingClientRect().top;
-        const offsetPosition =
-          elementPosition + window.pageYOffset - headerOffset;
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth",
-        });
-      }
-    }, 100);
+    // --- MODIFICACIÓN AQUÍ ---
+    // Elimina el toggle y simplemente selecciona la categoría.
+    setSelectedCategory(categoryName);
+    
+    // Lógica de scroll solo se ejecuta en la vista de escritorio
+    if (!isMobile) {
+      setTimeout(() => {
+        const catalogSection = document.getElementById("catalogo");
+        if (catalogSection) {
+          const headerOffset = 80;
+          const elementPosition = catalogSection.getBoundingClientRect().top;
+          const offsetPosition =
+            elementPosition + window.pageYOffset - headerOffset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        }
+      }, 100);
+    }
   };
 
   // --- FUNCIONES PARA LOS EVENTOS TÁCTILES ---
@@ -99,7 +102,6 @@ const Categories = ({ categories, setSelectedCategory }) => {
                 <div
                   key={category.name}
                   className={`category-card ${position}`}
-                  // Solo desliza la tarjeta, no la selecciona.
                   onClick={() => setActiveIndex(index)}
                 >
                   <img
