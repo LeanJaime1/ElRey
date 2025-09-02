@@ -127,7 +127,7 @@
 /* Mobile */
 @media (max-width: 768px) {
   .hero {
-    height: 450px;
+    height: 400px;
   }
 
   /* Centrado en mobile ya lo maneja .hero-slide */

@@ -5,7 +5,9 @@ import "./Categories.css";
 const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState({ width: undefined });
   useEffect(() => {
-    function handleResize() { setWindowSize({ width: window.innerWidth }); }
+    function handleResize() {
+      setWindowSize({ width: window.innerWidth });
+    }
     window.addEventListener("resize", handleResize);
     handleResize();
     return () => window.removeEventListener("resize", handleResize);
@@ -18,36 +20,66 @@ const Categories = ({ categories, setSelectedCategory }) => {
   const { width } = useWindowSize();
   const isMobile = width <= 768;
 
+  // --- NUEVOS ESTADOS PARA MANEJAR EL SWIPE ---
+  const [touchStartX, setTouchStartX] = useState(0);
+  const [touchEndX, setTouchEndX] = useState(0);
+  const [isSwiping, setIsSwiping] = useState(false);
+
   const handleCardClick = (index, categoryName) => {
     // Lógica de click que ya teníamos
     if (isMobile) {
       if (index !== activeIndex) {
         setActiveIndex(index);
       } else {
-        setSelectedCategory(prev => (prev === categoryName ? null : categoryName));
+        setSelectedCategory((prev) =>
+          prev === categoryName ? null : categoryName
+        );
       }
     } else {
-      setSelectedCategory(prev => (prev === categoryName ? null : categoryName));
+      setSelectedCategory((prev) =>
+        prev === categoryName ? null : categoryName
+      );
     }
-
-    // --- CORRECCIÓN DE SCROLL PARA MOBILE Y WEB ---
+    // Lógica de scroll
     setTimeout(() => {
-      const catalogSection = document.getElementById('catalogo');
+      const catalogSection = document.getElementById("catalogo");
       if (catalogSection) {
-        // 1. Altura del header fijo que debemos descontar
-        const headerOffset = 80; // La altura de tu header en píxeles
-        
-        // 2. Calculamos la posición del elemento y le restamos el offset
+        const headerOffset = 80;
         const elementPosition = catalogSection.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-        // 3. Hacemos scroll a la posición calculada
         window.scrollTo({
           top: offsetPosition,
-          behavior: "smooth"
+          behavior: "smooth",
         });
       }
     }, 100);
+  };
+
+  // --- NUEVAS FUNCIONES PARA LOS EVENTOS TÁCTILES ---
+  const handleTouchStart = (e) => {
+    setTouchStartX(e.touches[0].clientX);
+    setIsSwiping(true);
+  };
+
+  const handleTouchMove = (e) => {
+    if (isSwiping) {
+      setTouchEndX(e.touches[0].clientX);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (!isSwiping) return;
+
+    const swipeDistance = touchStartX - touchEndX;
+    // Si la distancia de swipe es lo suficientemente grande
+    if (swipeDistance > 50) { // Deslizar hacia la izquierda
+      setActiveIndex((prevIndex) =>
+        prevIndex < categories.length - 1 ? prevIndex + 1 : prevIndex
+      );
+    } else if (swipeDistance < -50) { // Deslizar hacia la derecha
+      setActiveIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : 0));
+    }
+    setIsSwiping(false);
   };
 
   return (
@@ -55,26 +87,32 @@ const Categories = ({ categories, setSelectedCategory }) => {
       <h1 className="categories-title">CATEGORÍAS</h1>
       <div className="categories-container">
         {isMobile ? (
-          <div className="mobile-carousel-wrapper">
+          // Usamos los nuevos eventos táctiles en el contenedor principal
+          <div
+            className="mobile-carousel-wrapper"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             {categories.map((category, index) => {
-              let position = 'middle';
-              if (index < activeIndex) position = 'left';
-              else if (index > activeIndex) position = 'right';
+              let position = "middle";
+              if (index < activeIndex) position = "left";
+              else if (index > activeIndex) position = "right";
 
               return (
-                <div 
-                  key={category.name} 
+                <div
+                  key={category.name}
                   className={`category-card ${position}`}
                   onClick={() => handleCardClick(index, category.name)}
                 >
-                  <img src={category.cardImg} alt={`Ojotas para ${category.name}`} />
-                  {/* AQUÍ ES DONDE ESTÁ EL CAMBIO EN EL JSX:
-                      Ahora tenemos DOS SPANs. Uno para el texto inicial (pequeño)
-                      y otro para el texto del overlay (grande y rojo). */}
-                  <div className="initial-text"> {/* NUEVO DIV para el texto inicial */}
+                  <img
+                    src={category.cardImg}
+                    alt={`Ojotas para ${category.name}`}
+                  />
+                  <div className="initial-text">
                     <span>{category.name}</span>
                   </div>
-                  <div className="overlay"> {/* TU OVERLAY ROJO ACTUAL */}
+                  <div className="overlay">
                     <span>{category.name}</span>
                   </div>
                 </div>
@@ -83,17 +121,19 @@ const Categories = ({ categories, setSelectedCategory }) => {
           </div>
         ) : (
           categories.map((category, index) => (
-            <div 
-              key={category.name} 
+            <div
+              key={category.name}
               className="category-card"
               onClick={() => handleCardClick(index, category.name)}
             >
-              <img src={category.cardImg} alt={`Ojotas para ${category.name}`} />
-              {/* Lo mismo para la vista de escritorio */}
-              <div className="initial-text"> {/* NUEVO DIV para el texto inicial */}
+              <img
+                src={category.cardImg}
+                alt={`Ojotas para ${category.name}`}
+              />
+              <div className="initial-text">
                 <span>{category.name}</span>
               </div>
-              <div className="overlay"> {/* TU OVERLAY ROJO ACTUAL */}
+              <div className="overlay">
                 <span>{category.name}</span>
               </div>
             </div>

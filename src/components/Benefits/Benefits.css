@@ -3,7 +3,7 @@
   justify-content: center;
   gap: 3rem;
   padding: 2rem 1rem;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Esta propiedad ya estaba bien para la versión de escritorio */
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -12,7 +12,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  min-width: 220px;
+  min-width: 220px; /* Esto podría causar problemas, lo ajustaremos para móvil */
   text-align: left;
 }
 
@@ -40,29 +40,32 @@
 /* ---------------------------------- */
 @media (max-width: 768px) {
   .benefits-section {
-    flex-direction: row;
-    justify-content: center;   /* Los centra si entran todos */
-    align-items: center;
+    justify-content: center;
+    align-items: flex-start; /* Se mantiene una alineación para que no se separen tanto */
     gap: 1.5rem;
     padding: 1rem;
-
-    /* Scroll horizontal si no entran */
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    -webkit-overflow-scrolling: touch;
+    flex-wrap: wrap; /* Asegura que los elementos se envuelvan a la siguiente línea */
+    
+    /* Eliminamos el overflow y el nowrap */
+    overflow-x: unset;
+    -webkit-overflow-scrolling: unset;
   }
 
   .benefit-item {
-    flex-direction: column; 
+    /* Aquí permitimos que el elemento se encoja para caber en la fila */
+    flex-grow: 1; /* Permite que crezca para ocupar espacio */
+    flex-basis: 45%; /* Le da un ancho base para que se acomoden dos por fila */
+    min-width: unset; /* Eliminamos el ancho mínimo que causa el scroll */
     text-align: center;
-    gap: 0.3rem;
-    min-width: 120px;
-    flex: 0 0 auto;
-
-    /* Truco para que se mantengan centrados incluso con scroll */
-    margin: 0 auto;
+    
+    /* Mantenemos el ícono y el texto en una columna para que se lea mejor */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    margin: 0;
   }
-
+  
   .benefit-icon {
     font-size: 1.6rem;
   }
