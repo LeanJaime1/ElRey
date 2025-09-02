@@ -13,7 +13,7 @@
   color: #333;
 }
 
-/* --- Container for Desktop View --- */
+/* --- ESTILOS BASE COMPARTIDOS --- */
 .categories-container {
   display: flex;
   flex-direction: row;
@@ -27,22 +27,13 @@
   overflow-x: auto;
 }
 
-/* --- ESTILOS BASE (PARA WEB) --- */
 .category-card {
   position: relative;
   flex-shrink: 0;
-  width: 400px;
-  height: 600px;
-  overflow: hidden;
-  cursor: pointer;
   border-radius: 15px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.category-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
 }
 
 .category-card img {
@@ -53,7 +44,6 @@
   display: block;
 }
 
-/* --- CAMBIO PRINCIPAL: Nuevo diseño del Overlay y Texto --- */
 .category-card .overlay {
   position: absolute;
   top: 0;
@@ -62,7 +52,7 @@
   bottom: 0;
   display: flex;
   justify-content: center;
-  align-items: flex-end; /* Alineado abajo por defecto para desktop */
+  align-items: flex-end;
   background: linear-gradient(
     to top,
     rgba(0, 0, 0, 0.8) 0%,
@@ -85,23 +75,40 @@
     letter-spacing 0.4s ease;
 }
 
-/* --- EFECTO HOVER --- */
-.category-card:hover img {
-  transform: scale(1.1);
+
+
+
+
+
+@media (min-width: 769px) {
+  .category-card {
+    width: 400px;
+    height: 600px;
+    cursor: pointer;
+  }
+
+  .category-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  }
+
+  .category-card:hover img {
+    transform: scale(1.1);
+  }
+
+  .category-card:hover .overlay {
+    background-color: rgba(230, 47, 47, 0.85);
+    align-items: center;
+  }
+
+  .category-card:hover .overlay span {
+    font-size: 2.8rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+  }
 }
 
-.category-card:hover .overlay {
-  background-color: rgba(230, 47, 47, 0.85); /* Rojo en hover para desktop */
-  align-items: center; /* Centrado en hover para desktop */
-}
 
-.category-card:hover .overlay span {
-  font-size: 2.8rem;
-  font-weight: 800;
-  letter-spacing: 2px;
-}
-
-/* --- Responsive para mobile (COVER FLOW) --- */
 @media (max-width: 768px) {
   .categories-container {
     padding: 2rem 0;
@@ -119,10 +126,14 @@
 
   .category-card {
     position: absolute;
-    flex-shrink: 1;
     width: 65vw;
     height: 400px;
     transition: transform 0.5s ease-in-out, opacity 0.5s ease, z-index 0.5s;
+    cursor: default;
+  }
+
+  .category-card .overlay span {
+    display: none;
   }
 
   .category-card .overlay {
@@ -132,10 +143,6 @@
       rgba(0, 0, 0, 0) 50%
     );
     align-items: center;
-  }
-
-  .category-card .overlay span {
-    display: none;
   }
 
   .category-card.middle {
@@ -156,19 +163,6 @@
     z-index: 5;
   }
 
-  .category-card.middle .overlay {
-    background: linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.8) 0%,
-      rgba(0, 0, 0, 0) 50%
-    );
-    align-items: center;
-  }
-
-  .category-card:hover img {
-    transform: none;
-  }
-
   /* Estilos para el botón en mobile */
   .category-select-button {
     background: rgba(230, 47, 47, 0.85);
@@ -186,14 +180,9 @@
     transition: transform 0.2s ease, background-color 0.2s ease;
   }
 
-  /* Efecto de "hover" para dispositivos táctiles (al tocar/presionar) */
-  .category-select-button:hover,
-  .category-select-button:focus,
+  /* Efecto de "active" para el botón en dispositivos táctiles */
   .category-select-button:active {
     background-color: #d12e2e;
-  }
-
-  .category-select-button:active {
     transform: scale(0.95);
   }
 }
