@@ -25,28 +25,19 @@ const Categories = ({ categories, setSelectedCategory }) => {
   const [touchEndX, setTouchEndX] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
 
-  const handleCardClick = (index, categoryName) => {
-    // Lógica de click que ya teníamos
-    if (isMobile) {
-      if (index !== activeIndex) {
-        setActiveIndex(index);
-      } else {
-        setSelectedCategory((prev) =>
-          prev === categoryName ? null : categoryName
-        );
-      }
-    } else {
-      setSelectedCategory((prev) =>
-        prev === categoryName ? null : categoryName
-      );
-    }
+  // Lógica para seleccionar una categoría y hacer scroll.
+  const handleCategorySelection = (categoryName) => {
+    setSelectedCategory((prev) =>
+      prev === categoryName ? null : categoryName
+    );
     // Lógica de scroll
     setTimeout(() => {
       const catalogSection = document.getElementById("catalogo");
       if (catalogSection) {
         const headerOffset = 80;
         const elementPosition = catalogSection.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        const offsetPosition =
+          elementPosition + window.pageYOffset - headerOffset;
         window.scrollTo({
           top: offsetPosition,
           behavior: "smooth",
@@ -55,7 +46,7 @@ const Categories = ({ categories, setSelectedCategory }) => {
     }, 100);
   };
 
-  // --- NUEVAS FUNCIONES PARA LOS EVENTOS TÁCTILES ---
+  // --- FUNCIONES PARA LOS EVENTOS TÁCTILES ---
   const handleTouchStart = (e) => {
     setTouchStartX(e.touches[0].clientX);
     setIsSwiping(true);
@@ -71,15 +62,20 @@ const Categories = ({ categories, setSelectedCategory }) => {
     if (!isSwiping) return;
 
     const swipeDistance = touchStartX - touchEndX;
-    // Si la distancia de swipe es lo suficientemente grande
-    if (swipeDistance > 50) { // Deslizar hacia la izquierda
-      setActiveIndex((prevIndex) =>
-        prevIndex < categories.length - 1 ? prevIndex + 1 : prevIndex
-      );
-    } else if (swipeDistance < -50) { // Deslizar hacia la derecha
-      setActiveIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : 0));
+    if (Math.abs(swipeDistance) > 50) {
+      if (swipeDistance > 0) {
+        // Deslizar hacia la izquierda
+        setActiveIndex((prevIndex) =>
+          prevIndex < categories.length - 1 ? prevIndex + 1 : prevIndex
+        );
+      } else {
+        // Deslizar hacia la derecha
+        setActiveIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : 0));
+      }
     }
     setIsSwiping(false);
+    setTouchStartX(0); // Resetear para el próximo swipe
+    setTouchEndX(0);
   };
 
   return (
@@ -87,7 +83,7 @@ const Categories = ({ categories, setSelectedCategory }) => {
       <h1 className="categories-title">CATEGORÍAS</h1>
       <div className="categories-container">
         {isMobile ? (
-          // Usamos los nuevos eventos táctiles en el contenedor principal
+          // Vista Móvil: carrusel deslizable con botón de selección
           <div
             className="mobile-carousel-wrapper"
             onTouchStart={handleTouchStart}
@@ -103,28 +99,35 @@ const Categories = ({ categories, setSelectedCategory }) => {
                 <div
                   key={category.name}
                   className={`category-card ${position}`}
-                  onClick={() => handleCardClick(index, category.name)}
+                  // Solo desliza la tarjeta, no la selecciona.
+                  onClick={() => setActiveIndex(index)}
                 >
                   <img
                     src={category.cardImg}
                     alt={`Ojotas para ${category.name}`}
                   />
-                  <div className="initial-text">
-                    <span>{category.name}</span>
-                  </div>
                   <div className="overlay">
-                    <span>{category.name}</span>
+                    <button
+                      className="category-select-button"
+                      onClick={(e) => {
+                        e.stopPropagation(); // Evita que el click se propague a la tarjeta.
+                        handleCategorySelection(category.name);
+                      }}
+                    >
+                      {category.name}
+                    </button>
                   </div>
                 </div>
               );
             })}
           </div>
         ) : (
+          // Vista de Escritorio: comportamiento de hover
           categories.map((category, index) => (
             <div
               key={category.name}
               className="category-card"
-              onClick={() => handleCardClick(index, category.name)}
+              onClick={() => handleCategorySelection(category.name)}
             >
               <img
                 src={category.cardImg}
