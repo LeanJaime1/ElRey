@@ -42,7 +42,7 @@ const Footer = () => {
               <FaInstagram />
             </a>
             <a
-              href={`https://wa.me/5491123456789?text=${encodedMessage}`}
+              href={`https://wa.me/5491132274885?text=${encodedMessage}`}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="WhatsApp"
