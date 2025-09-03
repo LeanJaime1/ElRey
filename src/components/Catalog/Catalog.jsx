@@ -8,20 +8,29 @@ const Catalog = ({ categories, selectedCategory }) => {
     return <p>Cargando galería...</p>;
   }
 
-  // --- Mapeo corregido ---
   const allImagesFlat = useMemo(() => {
     return categories.flatMap((category) =>
-      // Aquí 'imageItem' es un objeto { src, name }
       (category.galleryImages || []).map((imageItem) => ({
-        src: imageItem.src, // Accedemos a la propiedad src del objeto
+        src: imageItem.src,
         category: category.name,
-        alt: imageItem.name, // Usamos el nuevo nombre descriptivo para el alt
+        alt: imageItem.name,
       }))
     );
   }, [categories]);
 
+  const pageTitle = selectedCategory ? selectedCategory : "Nuestros productos";
+
   return (
     <section id="catalogo" className="catalog">
+      <div className="catalog-header">
+        <h2>{pageTitle}</h2>
+        {/* Aquí está el cambio: solo renderiza el p si no hay una categoría seleccionada */}
+        {!selectedCategory && (
+          <p>
+            Explora nuestra galería completa o filtra por tus categorías favoritas.
+          </p>
+        )}
+      </div>
       <div className="catalog-grid">
         {allImagesFlat.map((image, index) => (
           <div
@@ -35,7 +44,6 @@ const Catalog = ({ categories, selectedCategory }) => {
           >
             <img src={image.src} alt={image.alt} loading="lazy" />
             <div className="image-overlay">
-              {/* Opcional: Puedes mostrar el nombre de la imagen en el overlay */}
               <span>{image.alt}</span>
             </div>
           </div>

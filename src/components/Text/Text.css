@@ -1,0 +1,52 @@
+/* src/components/Text/Text.css */
+
+.text-container {
+  /* Contenedor principal para centrar y dar espacio */
+  max-width: 960px; /* Ancho máximo para el contenido */
+  margin: 0 auto; /* Centra el contenedor en la página */
+  padding: 40px 20px; /* Espaciado interno superior/inferior y en los lados */
+  text-align: center; /* Centra el texto */
+  /* background-color: #f9f9f9; <-- Línea eliminada para quitar el fondo gris */
+}
+
+.text-container h2 {
+  /* Estilo para el título (si lo agregas al componente) */
+  font-size: 2.8rem; /* Tamaño de fuente aún más grande para escritorio */
+  color: #333; /* Color de texto oscuro */
+  margin-bottom: 25px; /* Espacio debajo del título */
+}
+
+.text-container p {
+  /* Estilo para los párrafos */
+  font-size: 1.3rem; /* Tamaño de fuente más grande para escritorio */
+  line-height: 1.7; /* Altura de línea para mejor legibilidad */
+  color: #555; /* Un gris más suave para el texto */
+  margin-bottom: 20px; /* Espacio entre párrafos */
+}
+
+/* Media Queries para adaptabilidad (diseño responsive) */
+@media (max-width: 768px) {
+  .text-container {
+    padding: 30px 15px; /* Reduce el padding en dispositivos más pequeños */
+  }
+
+  .text-container h2 {
+    font-size: 2.2rem; /* Reduce el tamaño del título */
+  }
+
+  .text-container p {
+    font-size: 1.1rem; /* Reduce el tamaño del párrafo para pantallas pequeñas */
+  }
+}
+
+@media (max-width: 480px) {
+  .text-container {
+    padding: 20px 10px;
+  }
+  .text-container h2 {
+    font-size: 1.8rem; /* Aún más pequeño para móviles */
+  }
+  .text-container p {
+    font-size: 1rem; /* Tamaño estándar para móviles */
+  }
+}

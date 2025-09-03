@@ -11,6 +11,7 @@ import Contact from "./components/Contact/Contact";
 import Footer from "./components/Footer/Footer";
 import WhatsAppButton from "./components/WhatsAppButton/WhatsAppButton";
 import ThankYouPage from "./components/ThankYouPage/ThankYouPage";
+import Text from "./components/Text/Text"; // <-- Componente Text importado
 
 // --- 1. IMPORTAMOS TODAS LAS IMÁGENES ---
 
@@ -102,6 +103,7 @@ const App = () => {
             <>
               <section id="hero"><Hero /></section>
               <section id="benefits"><Benefits /></section>
+              <Text /> {/* <-- Componente Text agregado aquí */}
               <section id="categories">
                 <Categories 
                   categories={categoriesData} 
