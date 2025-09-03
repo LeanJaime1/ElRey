@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Importa useNavigate
+import { useNavigate } from "react-router-dom"; 
+import { Helmet } from "react-helmet-async"; // <-- Importado aquí
 import "./Contact.css";
 
 const Contact = () => {
-  const navigate = useNavigate(); // Inicializa el hook
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
-    // Agregamos el nuevo campo al estado inicial
     categoria: "",
     mensaje: "",
   });
@@ -24,7 +24,6 @@ const Contact = () => {
         if (!value.trim()) return "El email es obligatorio";
         if (!/\S+@\S+\.\S+/.test(value)) return "El email no es válido";
         break;
-      // Agregamos la validación para el nuevo campo
       case 'categoria':
         if (!value) return "Debes seleccionar una categoría";
         break;
@@ -58,7 +57,6 @@ const Contact = () => {
     const validationErrors = {
       nombre: validateField('nombre', formData.nombre),
       email: validateField('email', formData.email),
-      // Validamos la categoría en el envío
       categoria: validateField('categoria', formData.categoria),
       mensaje: validateField('mensaje', formData.mensaje)
     };
@@ -71,7 +69,6 @@ const Contact = () => {
       console.log("Formulario enviado:", formData);
       setSubmitted(true);
       setErrors({});
-      // Redireccionamos a la página de agradecimiento
       navigate("/gracias");
     } else {
       setErrors(activeErrors);
@@ -81,6 +78,12 @@ const Contact = () => {
 
   return (
     <section className="contact-container" id="contacto">
+      <Helmet> {/* <-- Agregado aquí */}
+        <title>Contacto | El Rey de las Ojotas</title>
+        <meta name="description" content="Completa nuestro formulario de contacto para cotizaciones o consultas de ojotas personalizadas." />
+        <link rel="canonical" href="https://elreydelasojotas.com/contacto" />
+      </Helmet>
+
       <h2>Contactanos</h2>
 
       {submitted && (
@@ -116,7 +119,6 @@ const Contact = () => {
         />
         {errors.email && <p className="error">{errors.email}</p>}
 
-        {/* Campo de selección para las categorías */}
         <label htmlFor="categoria">Categoría de interés</label>
         <select
           id="categoria"
