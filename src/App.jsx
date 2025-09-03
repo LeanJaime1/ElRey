@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { HelmetProvider, Helmet } from "react-helmet-async";
 
 import Header from "./components/Header/Header";
 import Hero from "./components/Hero/Hero";
@@ -8,7 +7,7 @@ import Categories from "./components/Categories/Categories";
 import Catalog from "./components/Catalog/Catalog";
 import Benefits from "./components/Benefits/Benefits";
 import Us from "./components/Us/Us";
-import Contact from "./components/Contact/Contact"; // <-- Componente Contact importado
+import Contact from "./components/Contact/Contact";
 import Footer from "./components/Footer/Footer";
 import WhatsAppButton from "./components/WhatsAppButton/WhatsAppButton";
 import ThankYouPage from "./components/ThankYouPage/ThankYouPage";
@@ -88,47 +87,39 @@ const App = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   return (
-    <HelmetProvider>
-      <BrowserRouter>
-        <Header />
-        <ScrollToHashElement />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <Helmet>
-                  <title>El Rey de las Ojotas | Ojotas Personalizadas</title>
-                  <meta name="description" content="Ojotas personalizadas para eventos, empresas y hoteles. Diseños a medida, envíos a todo el país. Contactanos." />
-                  <link rel="canonical" href="https://elreydelasojotas.com/" />
-                </Helmet>
-                <section id="hero"><Hero /></section>
-                <section id="benefits"><Benefits /></section>
-                <Text />
-                <section id="categories">
-                  <Categories 
-                    categories={categoriesData} 
-                    setSelectedCategory={setSelectedCategory} 
-                  />
-                </section>
-                <section id="catalogo">
-                  <Catalog
-                    categories={categoriesData}
-                    selectedCategory={selectedCategory}
-                  />
-                </section>
-                <Contact /> {/* <-- MOVIDO AQUÍ */}
-              </>
-            }
-          />
-          <Route path="/quienes-somos" element={<Us />} />
-          <Route path="/gracias" element={<ThankYouPage />} />
-          {/* <Route path="/contacto" element={<Contact />} /> <-- RUTA ELIMINADA */}
-        </Routes>
-        <WhatsAppButton />
-        <Footer />
-      </BrowserRouter>
-    </HelmetProvider>
+    <BrowserRouter>
+      <Header />
+      <ScrollToHashElement />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <section id="hero"><Hero /></section>
+              <section id="benefits"><Benefits /></section>
+              <Text />
+              <section id="categories">
+                <Categories 
+                  categories={categoriesData} 
+                  setSelectedCategory={setSelectedCategory} 
+                />
+              </section>
+              <section id="catalogo">
+                <Catalog
+                  categories={categoriesData}
+                  selectedCategory={selectedCategory}
+                />
+              </section>
+              <Contact />
+            </>
+          }
+        />
+        <Route path="/quienes-somos" element={<Us />} />
+        <Route path="/gracias" element={<ThankYouPage />} />
+      </Routes>
+      <WhatsAppButton />
+      <Footer />
+    </BrowserRouter>
   );
 };
 

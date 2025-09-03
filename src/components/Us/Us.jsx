@@ -1,5 +1,4 @@
 import React from "react";
-import { Helmet } from "react-helmet-async"; // <-- Importado aquí
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import "./Us.css";
@@ -7,12 +6,6 @@ import "./Us.css";
 const Us = () => {
   return (
     <div className="us-page">
-      <Helmet> {/* <-- Agregado aquí */}
-        <title>Quiénes Somos | El Rey de las Ojotas</title>
-        <meta name="description" content="Descubre más sobre El Rey de las Ojotas, nuestra historia y compromiso con la calidad en ojotas personalizadas." />
-        <link rel="canonical" href="https://elreydelasojotas.com/quienes-somos" />
-      </Helmet>
-
       <Header />
       <main className="us-content">
         <h1>Quiénes Somos</h1>
@@ -35,7 +28,6 @@ const Us = () => {
           ¡Consultanos y hacé la diferencia con tus propias ojotas personalizadas!
         </p>
       </main>
-
     </div>
   );
 };

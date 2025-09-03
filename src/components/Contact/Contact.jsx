@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; 
-import { Helmet } from "react-helmet-async"; // <-- Importado aquí
 import "./Contact.css";
 
 const Contact = () => {
@@ -78,12 +77,6 @@ const Contact = () => {
 
   return (
     <section className="contact-container" id="contacto">
-      <Helmet> {/* <-- Agregado aquí */}
-        <title>Contacto | El Rey de las Ojotas</title>
-        <meta name="description" content="Completa nuestro formulario de contacto para cotizaciones o consultas de ojotas personalizadas." />
-        <link rel="canonical" href="https://elreydelasojotas.com/contacto" />
-      </Helmet>
-
       <h2>Contactanos</h2>
 
       {submitted && (
