@@ -1,14 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom"; // Importamos Link
+import { Link } from "react-router-dom";
 import "./Footer.css";
 import logo from "../../assets/img/logo.png";
 import { FaInstagram, FaWhatsapp, FaEnvelope } from "react-icons/fa";
 
 const Footer = () => {
+  const defaultMessage = "¡Hola, El rey de las Ojotas! Quisiera hacer una consulta.";
+  const encodedMessage = encodeURIComponent(defaultMessage);
+  
   return (
     <footer className="footer">
       <div className="footer-main-content">
-        {/* --- Columna 1: Logo y Slogan --- */}
         <div className="footer-column brand">
           <img
             src={logo}
@@ -20,7 +22,6 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* --- Columna 2: Navegación --- */}
         <div className="footer-column">
           <h4>Navegación</h4>
           <ul className="footer-links">
@@ -29,7 +30,6 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* --- Columna 3: Redes Sociales --- */}
         <div className="footer-column">
           <h4>Seguinos</h4>
           <div className="social-icons">
@@ -42,21 +42,20 @@ const Footer = () => {
               <FaInstagram />
             </a>
             <a
-              href="https://wa.me/5491123456789"
+              href={`https://wa.me/5491123456789?text=${encodedMessage}`}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="WhatsApp"
             >
               <FaWhatsapp />
             </a>
-            <a href="mailto:tuemail@ejemplo.com" aria-label="Email">
+            <a href="mailto:elreydelasojotas@gmail.com" aria-label="Email"> {/* <-- Corregido aquí */}
               <FaEnvelope />
             </a>
           </div>
         </div>
       </div>
 
-      {/* --- Barra inferior con el Copyright --- */}
       <div className="footer-bottom-bar">
         <p className="footer-copy">© {new Date().getFullYear()} El Rey de las Ojotas. Todos los derechos reservados.</p>
       </div>
