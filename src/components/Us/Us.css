@@ -41,3 +41,20 @@
     line-height: 1.6;   /* Mejora la legibilidad en párrafos más anchos */
   }
 }
+
+.us-content {
+  flex: 1; 
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  
+  /* --- AÑADIDO: Espacio superior para compensar el header fijo --- */
+  padding-top: 100px; /* Ajusta este valor. 80px + un poco de espacio extra */
+}
+
+/* Y si el padding-top te parece demasiado grande en escritorio, puedes ajustarlo en la media query. */
+@media (max-width: 768px) {
+    .us-content {
+        padding-top: 100px; /* Este valor es clave para móvil */
+    }
+}
