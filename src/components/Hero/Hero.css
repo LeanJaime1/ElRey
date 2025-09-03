@@ -15,7 +15,6 @@
   opacity: 0;
   transition: opacity 1s ease-in-out;
   z-index: 1;
-  /* Añadido para centrar el contenido flex */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -39,8 +38,7 @@
 }
 
 .hero-text {
-  /* Eliminadas propiedades de posicionamiento absoluto y transform */
-  position: relative; /* Cambiado a relative o eliminado si no es necesario */
+  position: relative;
   top: auto;
   left: auto;
   transform: none;
@@ -55,7 +53,6 @@
   padding: 0 1rem;
   box-sizing: border-box;
   z-index: 2;
-  /* Centrado ya lo maneja el .hero-slide padre con flexbox */
 }
 
 .hero-text h1 {
@@ -124,9 +121,45 @@
 }
 
 /* ----------------------- */
+/* Estilos para las flechas de navegación */
+.hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.hero-arrow:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.hero-arrow.left {
+  left: 20px;
+}
+
+.hero-arrow.right {
+  right: 20px;
+}
+
+/* ----------------------- */
 /* Mobile */
 @media (max-width: 768px) {
+  /* Arreglo para el nav que tapa el banner */
   .hero {
+    margin-top: 60px; /* Ajusta este valor a la altura de tu navbar en móvil */
     height: 400px;
   }
 
@@ -170,46 +203,7 @@
     width: 9px;
     height: 9px;
   }
-}
-
-/* ... (todos tus estilos anteriores van aquí) ... */
-
-/* ----------------------- */
-/* Estilos para las flechas de navegación */
-.hero-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10; /* Mismo z-index que los dots para estar por encima */
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 45px;
-  height: 45px;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.hero-arrow:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
-.hero-arrow.left {
-  left: 20px;
-}
-
-.hero-arrow.right {
-  right: 20px;
-}
-
-/* Ajustes para las flechas en Mobile */
-@media (max-width: 768px) {
+  
   .hero-arrow {
     width: 35px;
     height: 35px;
@@ -223,6 +217,4 @@
   .hero-arrow.right {
     right: 10px;
   }
-  
-  /* ... (el resto de tus media queries) ... */
 }
