@@ -7,7 +7,12 @@ import { FaInstagram, FaWhatsapp, FaEnvelope } from "react-icons/fa";
 const Footer = () => {
   const defaultMessage = "¡Hola, El rey de las Ojotas! Quisiera hacer una consulta.";
   const encodedMessage = encodeURIComponent(defaultMessage);
-  
+
+  const handleLinkClick = () => {
+    // Hace scroll al inicio de la página
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+ 
   return (
     <footer className="footer">
       <div className="footer-main-content">
@@ -25,8 +30,9 @@ const Footer = () => {
         <div className="footer-column">
           <h4>Navegación</h4>
           <ul className="footer-links">
-            <li><Link to="/">Inicio</Link></li>
-            <li><Link to="/quienes-somos">Quiénes Somos</Link></li>
+            <li><Link to="/" onClick={handleLinkClick}>Inicio</Link></li>
+            <li><Link to="/quienes-somos" onClick={handleLinkClick}>Quiénes Somos</Link></li>
+            <li><Link to="/contacto" onClick={handleLinkClick}>Contacto</Link></li>
           </ul>
         </div>
 
@@ -49,7 +55,7 @@ const Footer = () => {
             >
               <FaWhatsapp />
             </a>
-            <a href="mailto:elreydelasojotas@gmail.com" aria-label="Email"> {/* <-- Corregido aquí */}
+            <a href="mailto:elreydelasojotas@gmail.com" aria-label="Email">
               <FaEnvelope />
             </a>
           </div>

@@ -21,6 +21,11 @@ const Header = () => {
     };
   }, [menuOpen]);
 
+  // Nuevo useEffect para manejar el scroll al cambiar de ruta
+  useEffect(() => {
+    window.scrollTo(0, 0); // Siempre hace scroll al inicio de la página
+  }, [location.pathname]);
+
   const handleNavigation = (targetId) => {
     if (location.pathname === "/") {
       const el = document.getElementById(targetId);
@@ -43,7 +48,6 @@ const Header = () => {
 
   return (
     <header className="header">
-      {/* --- Fondo oscuro para cerrar el menú --- */}
       {menuOpen && <div className="backdrop" onClick={toggleMenu}></div>}
 
       <div className="logo-container" onClick={handleLogoClick} style={{ cursor: "pointer" }}>
@@ -53,7 +57,6 @@ const Header = () => {
       <nav className={`nav ${menuOpen ? "open" : ""}`}>
         <a href="/" onClick={handleInicioClick}>Inicio</a>
         <Link to="/quienes-somos" onClick={() => setMenuOpen(false)}>Quiénes somos</Link>
-        {/* Enlace de Contacto añadido al menú */}
         <Link to="/contacto" onClick={() => setMenuOpen(false)}>Contacto</Link>
       </nav>
 
