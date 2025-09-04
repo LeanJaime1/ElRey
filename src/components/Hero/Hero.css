@@ -4,6 +4,8 @@
   height: calc(85vh - 80px);
   overflow: hidden;
   font-family: 'Poppins', sans-serif;
+  /* NUEVO: Permite que el contenido no se desplace al intentar deslizar */
+  touch-action: pan-y; 
 }
 
 .hero-slide {
@@ -204,17 +206,8 @@
     height: 9px;
   }
   
+  /* NUEVO: Oculta las flechas en mobile */
   .hero-arrow {
-    width: 35px;
-    height: 35px;
-    font-size: 1.2rem;
-  }
-  
-  .hero-arrow.left {
-    left: 10px;
-  }
-
-  .hero-arrow.right {
-    right: 10px;
+    display: none; 
   }
 }

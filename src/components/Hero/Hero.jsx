@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react"; // Importa useRef
 import { Link } from "react-router-dom";
 import "./Hero.css";
 
@@ -14,9 +14,14 @@ const banners = [
 
 const Hero = () => {
   const [current, setCurrent] = useState(0);
-  const length = banners.length; // Guardamos la longitud para no repetirla
+  const length = banners.length;
 
-  // NUEVO: Funciones para navegar entre slides
+  // NUEVO: Estados y Refs para la funcionalidad de Swipe
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+  const minSwipeDistance = 50; // Distancia mínima para considerar un swipe
+
+  // Funciones para navegar entre slides
   const nextSlide = () => {
     setCurrent(current === length - 1 ? 0 : current + 1);
   };
@@ -28,25 +33,57 @@ const Hero = () => {
   // Cambio automático cada 6 segundos
   useEffect(() => {
     const interval = setInterval(() => {
-      // Usamos la lógica de nextSlide para mantener consistencia
       setCurrent(prev => (prev + 1) % length);
     }, 6000);
     return () => clearInterval(interval);
-  }, []); // El array vacío asegura que el efecto se ejecute solo al montar/desmontar
+  }, [length]); // Añade length a las dependencias para evitar warnings
 
   // Función para ir a un slide específico al hacer clic en un punto
   const goToSlide = (slideIndex) => {
     setCurrent(slideIndex);
   };
 
+  // NUEVO: Handlers para eventos táctiles (swipe)
+  const onTouchStart = (e) => {
+    touchEndX.current = 0; // Resetea el endX en cada inicio de toque
+    touchStartX.current = e.targetTouches[0].clientX;
+  };
+
+  const onTouchMove = (e) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return;
+
+    const distance = touchStartX.current - touchEndX.current;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    // Solo ejecuta si hay un swipe significativo
+    if (isLeftSwipe) {
+      nextSlide();
+    } else if (isRightSwipe) {
+      prevSlide();
+    }
+
+    // Resetea para el próximo swipe
+    touchStartX.current = 0;
+    touchEndX.current = 0;
+  };
+
   return (
-    <section className="hero">
-      {/* NUEVO: Botón para slide anterior (flecha izquierda) */}
+    <section 
+      className="hero"
+      onTouchStart={onTouchStart} // Añade los handlers táctiles aquí
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+    >
+      {/* Las flechas se ocultan con CSS en mobile */}
       <button onClick={prevSlide} className="hero-arrow left">
         &lt;
       </button>
 
-      {/* NUEVO: Botón para slide siguiente (flecha derecha) */}
       <button onClick={nextSlide} className="hero-arrow right">
         &gt;
       </button>
