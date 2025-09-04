@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"; // Importa useRef
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./Hero.css";
 
@@ -16,12 +16,10 @@ const Hero = () => {
   const [current, setCurrent] = useState(0);
   const length = banners.length;
 
-  // NUEVO: Estados y Refs para la funcionalidad de Swipe
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
-  const minSwipeDistance = 50; // Distancia mínima para considerar un swipe
+  const minSwipeDistance = 50;
 
-  // Funciones para navegar entre slides
   const nextSlide = () => {
     setCurrent(current === length - 1 ? 0 : current + 1);
   };
@@ -30,22 +28,19 @@ const Hero = () => {
     setCurrent(current === 0 ? length - 1 : current - 1);
   };
 
-  // Cambio automático cada 6 segundos
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent(prev => (prev + 1) % length);
     }, 6000);
     return () => clearInterval(interval);
-  }, [length]); // Añade length a las dependencias para evitar warnings
+  }, [length]);
 
-  // Función para ir a un slide específico al hacer clic en un punto
   const goToSlide = (slideIndex) => {
     setCurrent(slideIndex);
   };
 
-  // NUEVO: Handlers para eventos táctiles (swipe)
   const onTouchStart = (e) => {
-    touchEndX.current = 0; // Resetea el endX en cada inicio de toque
+    touchEndX.current = 0;
     touchStartX.current = e.targetTouches[0].clientX;
   };
 
@@ -60,14 +55,12 @@ const Hero = () => {
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
 
-    // Solo ejecuta si hay un swipe significativo
     if (isLeftSwipe) {
       nextSlide();
     } else if (isRightSwipe) {
       prevSlide();
     }
 
-    // Resetea para el próximo swipe
     touchStartX.current = 0;
     touchEndX.current = 0;
   };
@@ -75,11 +68,10 @@ const Hero = () => {
   return (
     <section 
       className="hero"
-      onTouchStart={onTouchStart} // Añade los handlers táctiles aquí
+      onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
     >
-      {/* Las flechas se ocultan con CSS en mobile */}
       <button onClick={prevSlide} className="hero-arrow left">
         &lt;
       </button>
@@ -97,7 +89,8 @@ const Hero = () => {
           <div className="hero-text">
             <h1>{banner.title}</h1>
             <p>{banner.subtitle}</p>
-            <Link to="/contacto" className="hero-btn">Contactanos</Link>
+            {/* CAMBIO AQUÍ: Usamos un <a> que apunta al ID del formulario */}
+            <a href="#contacto" className="hero-btn">Contactanos</a>
           </div>
         </div>
       ))}
