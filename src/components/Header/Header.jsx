@@ -30,14 +30,11 @@ const Header = () => {
       const el = document.getElementById(targetId);
       if (el) el.scrollIntoView({ behavior: "smooth" });
     } else {
-      // Si no estamos en la página de inicio, navegamos primero
-      // y pasamos el ID como estado para hacer el scroll después.
       navigate("/", { state: { scrollTo: targetId } });
     }
     setMenuOpen(false);
   };
 
-  // Nuevo useEffect para manejar el scroll después de navegar
   useEffect(() => {
     if (location.state && location.state.scrollTo) {
       const el = document.getElementById(location.state.scrollTo);
@@ -66,8 +63,8 @@ const Header = () => {
       <nav className={`nav ${menuOpen ? "open" : ""}`}>
         <a href="/" onClick={handleInicioClick}>Inicio</a>
         <Link to="/quienes-somos" onClick={() => setMenuOpen(false)}>Quiénes somos</Link>
-        {/* Usamos un <a> con onClick para usar nuestra lógica de navegación */}
-        <a href="#contacto" onClick={(e) => { e.preventDefault(); handleNavigation("contacto"); }}>Contacto</a>
+        {/* Enlace "Contacto" modificado para usar <Link> con el hash */}
+        <Link to="/#contacto" onClick={() => setMenuOpen(false)}>Contacto</Link>
       </nav>
 
       <button
