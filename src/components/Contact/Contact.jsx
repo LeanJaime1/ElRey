@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; 
 import "./Contact.css";
 
 const Contact = () => {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
@@ -12,7 +10,6 @@ const Contact = () => {
   });
 
   const [errors, setErrors] = useState({});
-  const [submitted, setSubmitted] = useState(false);
 
   const validateField = (name, value) => {
     switch (name) {
@@ -52,7 +49,6 @@ const Contact = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
     const validationErrors = {
       nombre: validateField('nombre', formData.nombre),
       email: validateField('email', formData.email),
@@ -64,28 +60,19 @@ const Contact = () => {
       return acc;
     }, {});
     
-    if (Object.keys(activeErrors).length === 0) {
-      console.log("Formulario enviado:", formData);
-      setSubmitted(true);
-      setErrors({});
-      navigate("/gracias");
-    } else {
+    if (Object.keys(activeErrors).length > 0) {
+      e.preventDefault(); // Evita el envío si hay errores
       setErrors(activeErrors);
-      setSubmitted(false);
     }
+    // Si no hay errores, el formulario se enviará automáticamente
+    // gracias a los atributos `action` y `method` del form.
   };
 
   return (
     <section className="contact-container" id="contacto">
       <h2>Contactanos</h2>
 
-      {submitted && (
-        <p className="success-message">
-          ¡Gracias por contactarnos! Te responderemos pronto.
-        </p>
-      )}
-
-      <form onSubmit={handleSubmit} noValidate>
+      <form onSubmit={handleSubmit} noValidate action="https://formspree.io/f/mzzakvwg" method="POST">
         <label htmlFor="nombre">Nombre</label>
         <input
           type="text"

@@ -21,9 +21,8 @@ const Header = () => {
     };
   }, [menuOpen]);
 
-  // Nuevo useEffect para manejar el scroll al cambiar de ruta
   useEffect(() => {
-    window.scrollTo(0, 0); // Siempre hace scroll al inicio de la página
+    window.scrollTo(0, 0);
   }, [location.pathname]);
 
   const handleNavigation = (targetId) => {
@@ -31,10 +30,20 @@ const Header = () => {
       const el = document.getElementById(targetId);
       if (el) el.scrollIntoView({ behavior: "smooth" });
     } else {
-      navigate("/");
+      // Si no estamos en la página de inicio, navegamos primero
+      // y pasamos el ID como estado para hacer el scroll después.
+      navigate("/", { state: { scrollTo: targetId } });
     }
     setMenuOpen(false);
   };
+
+  // Nuevo useEffect para manejar el scroll después de navegar
+  useEffect(() => {
+    if (location.state && location.state.scrollTo) {
+      const el = document.getElementById(location.state.scrollTo);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [location.state]);
 
   const handleLogoClick = (e) => {
     e.preventDefault();
@@ -57,7 +66,8 @@ const Header = () => {
       <nav className={`nav ${menuOpen ? "open" : ""}`}>
         <a href="/" onClick={handleInicioClick}>Inicio</a>
         <Link to="/quienes-somos" onClick={() => setMenuOpen(false)}>Quiénes somos</Link>
-        <Link to="/contacto" onClick={() => setMenuOpen(false)}>Contacto</Link>
+        {/* Usamos un <a> con onClick para usar nuestra lógica de navegación */}
+        <a href="#contacto" onClick={(e) => { e.preventDefault(); handleNavigation("contacto"); }}>Contacto</a>
       </nav>
 
       <button
