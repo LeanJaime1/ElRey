@@ -5,7 +5,7 @@
 }
 
 .categories-title {
-  margin-top: 80px;
+  margin-top: 40px; /* Reducción del espacio superior */
   text-align: center;
   margin-bottom: 1rem;
   font-size: 2rem;
@@ -75,11 +75,6 @@
     letter-spacing 0.4s ease;
 }
 
-
-
-
-
-
 @media (min-width: 769px) {
   .category-card {
     width: 400px;
@@ -107,7 +102,6 @@
     letter-spacing: 2px;
   }
 }
-
 
 @media (max-width: 768px) {
   .categories-container {

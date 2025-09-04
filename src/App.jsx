@@ -91,6 +91,7 @@ const App = () => {
       <Header />
       <ScrollToHashElement />
       <Routes>
+        {/* Ruta para la Home con todos los componentes */}
         <Route
           path="/"
           element={
@@ -114,6 +115,8 @@ const App = () => {
             </>
           }
         />
+        {/* Ruta para la página de Contacto */}
+        <Route path="/contacto" element={<Contact />} />
         <Route path="/quienes-somos" element={<Us />} />
         <Route path="/gracias" element={<ThankYouPage />} />
       </Routes>

@@ -14,7 +14,7 @@ const ThankYouPage = () => {
       <h1>¡Gracias por contactarnos!</h1>
       <p>Tu mensaje ha sido recibido. Te responderemos a la brevedad.</p>
       {/* Se ha cambiado la ruta del Link para incluir el hash #hero */}
-      <Link to="/#hero" className="thank-you-btn">Volver a la página principal</Link>
+      <Link to="/" className="thank-you-btn">Volver a la página principal</Link>
     </div>
   );
 };

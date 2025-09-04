@@ -53,7 +53,8 @@ const Header = () => {
       <nav className={`nav ${menuOpen ? "open" : ""}`}>
         <a href="/" onClick={handleInicioClick}>Inicio</a>
         <Link to="/quienes-somos" onClick={() => setMenuOpen(false)}>Quiénes somos</Link>
-        {/* El Link a Contacto ha sido eliminado del menú de navegación */}
+        {/* Enlace de Contacto añadido al menú */}
+        <Link to="/contacto" onClick={() => setMenuOpen(false)}>Contacto</Link>
       </nav>
 
       <button
