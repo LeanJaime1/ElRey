@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Importa useNavigate
 import "./Contact.css";
 
 const Contact = () => {
+  const navigate = useNavigate(); // Inicializa el hook
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
@@ -10,20 +12,21 @@ const Contact = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [submitStatus, setSubmitStatus] = useState(null);
 
   const validateField = (name, value) => {
     switch (name) {
-      case 'nombre':
+      case "nombre":
         if (!value.trim()) return "El nombre es obligatorio";
         break;
-      case 'email':
+      case "email":
         if (!value.trim()) return "El email es obligatorio";
         if (!/\S+@\S+\.\S+/.test(value)) return "El email no es válido";
         break;
-      case 'categoria':
+      case "categoria":
         if (!value) return "Debes seleccionar una categoría";
         break;
-      case 'mensaje':
+      case "mensaje":
         if (!value.trim()) return "El mensaje es obligatorio";
         break;
       default:
@@ -38,8 +41,9 @@ const Contact = () => {
     if (errors[name]) {
       setErrors({ ...errors, [name]: "" });
     }
+    setSubmitStatus(null);
   };
-  
+
   const handleBlur = (e) => {
     const { name, value } = e.target;
     const error = validateField(name, value);
@@ -48,31 +52,62 @@ const Contact = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     const validationErrors = {
-      nombre: validateField('nombre', formData.nombre),
-      email: validateField('email', formData.email),
-      categoria: validateField('categoria', formData.categoria),
-      mensaje: validateField('mensaje', formData.mensaje)
+      nombre: validateField("nombre", formData.nombre),
+      email: validateField("email", formData.email),
+      categoria: validateField("categoria", formData.categoria),
+      mensaje: validateField("mensaje", formData.mensaje),
     };
-    const activeErrors = Object.entries(validationErrors).reduce((acc, [key, value]) => {
-      if (value) acc[key] = value;
-      return acc;
-    }, {});
-    
-    if (Object.keys(activeErrors).length > 0) {
-      e.preventDefault(); // Evita el envío si hay errores
-      setErrors(activeErrors);
+
+    const activeErrors = Object.values(validationErrors).filter(Boolean);
+
+    if (activeErrors.length > 0) {
+      setErrors(validationErrors);
+      return;
     }
-    // Si no hay errores, el formulario se enviará automáticamente
-    // gracias a los atributos `action` y `method` del form.
+
+    try {
+      const response = await fetch("https://formspree.io/f/mzzakvwg", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        // Redirige a la página de agradecimiento
+        navigate("/gracias"); 
+      } else {
+        setSubmitStatus("error");
+      }
+    } catch (error) {
+      console.error("Error al enviar el formulario:", error);
+      setSubmitStatus("error");
+    }
   };
 
   return (
     <section className="contact-container" id="contacto">
       <h2>Contactanos</h2>
 
-      <form onSubmit={handleSubmit} noValidate action="https://formspree.io/f/mzzakvwg" method="POST">
+      {submitStatus === "success" && (
+        <p className="success-message">
+          ✅ ¡Mensaje enviado con éxito! Te responderemos pronto.
+        </p>
+      )}
+
+      {submitStatus === "error" && (
+        <p className="error-message">
+          ❌ ¡Hubo un error al enviar el mensaje! Por favor, inténtalo de nuevo.
+        </p>
+      )}
+
+      <form onSubmit={handleSubmit} noValidate>
         <label htmlFor="nombre">Nombre</label>
         <input
           type="text"
@@ -82,7 +117,7 @@ const Contact = () => {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder="Tu nombre"
-          className={errors.nombre ? 'input-error' : ''}
+          className={errors.nombre ? "input-error" : ""}
         />
         {errors.nombre && <p className="error">{errors.nombre}</p>}
 
@@ -95,7 +130,7 @@ const Contact = () => {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder="tuemail@ejemplo.com"
-          className={errors.email ? 'input-error' : ''}
+          className={errors.email ? "input-error" : ""}
         />
         {errors.email && <p className="error">{errors.email}</p>}
 
@@ -106,9 +141,11 @@ const Contact = () => {
           value={formData.categoria}
           onChange={handleChange}
           onBlur={handleBlur}
-          className={errors.categoria ? 'input-error' : ''}
+          className={errors.categoria ? "input-error" : ""}
         >
-          <option value="" disabled>Selecciona una opción</option>
+          <option value="" disabled>
+            Selecciona una opción
+          </option>
           <option value="empresas">Empresas</option>
           <option value="eventos">Eventos</option>
           <option value="hotel/spa">Hotel/Spa</option>
@@ -124,7 +161,7 @@ const Contact = () => {
           onBlur={handleBlur}
           placeholder="Escribe tu mensaje aquí"
           rows="5"
-          className={errors.mensaje ? 'input-error' : ''}
+          className={errors.mensaje ? "input-error" : ""}
         />
         {errors.mensaje && <p className="error">{errors.mensaje}</p>}
 
