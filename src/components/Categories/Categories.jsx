@@ -26,11 +26,11 @@ const Categories = ({ categories, setSelectedCategory }) => {
   const [isSwiping, setIsSwiping] = useState(false);
 
   // Lógica para seleccionar una categoría y hacer scroll.
-  const handleCategorySelection = (categoryName) => {
-    // --- MODIFICACIÓN AQUÍ ---
-    // Elimina el toggle y simplemente selecciona la categoría.
+  const handleCategorySelection = (categoryName, index) => {
+    // Fija la categoría seleccionada como la "activa" para que se quede en el centro.
+    setActiveIndex(index);
     setSelectedCategory(categoryName);
-    
+
     // Lógica de scroll solo se ejecuta en la vista de escritorio
     if (!isMobile) {
       setTimeout(() => {
@@ -65,7 +65,9 @@ const Categories = ({ categories, setSelectedCategory }) => {
     if (!isSwiping) return;
 
     const swipeDistance = touchStartX - touchEndX;
-    if (Math.abs(swipeDistance) > 50) {
+
+    // Solo ejecuta la lógica de swipe si la distancia es significativa.
+    if (Math.abs(swipeDistance) > 75) {
       if (swipeDistance > 0) {
         // Deslizar hacia la izquierda
         setActiveIndex((prevIndex) =>
@@ -113,7 +115,7 @@ const Categories = ({ categories, setSelectedCategory }) => {
                       className="category-select-button"
                       onClick={(e) => {
                         e.stopPropagation(); // Evita que el click se propague a la tarjeta.
-                        handleCategorySelection(category.name);
+                        handleCategorySelection(category.name, index);
                       }}
                     >
                       {category.name}
@@ -129,7 +131,7 @@ const Categories = ({ categories, setSelectedCategory }) => {
             <div
               key={category.name}
               className="category-card"
-              onClick={() => handleCategorySelection(category.name)}
+              onClick={() => handleCategorySelection(category.name, index)}
             >
               <img
                 src={category.cardImg}
