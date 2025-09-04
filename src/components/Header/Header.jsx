@@ -42,28 +42,35 @@ const Header = () => {
     }
   }, [location.state]);
 
-  const handleLogoClick = (e) => {
+  const handleHomeNavigation = (e) => {
     e.preventDefault();
-    handleNavigation("hero");
-  };
+    setMenuOpen(false);
 
-  const handleInicioClick = (e) => {
-    e.preventDefault();
-    handleNavigation("hero");
+    // ✅ Lógica mejorada para manejar la navegación a la home.
+    if (location.pathname === "/") {
+      // Si ya estoy en la home, hago scroll al hero para "recargar" la vista.
+      handleNavigation("hero");
+      // Si además había un hash, lo elimino.
+      if (location.hash) {
+          navigate("/", { replace: true });
+      }
+    } else {
+      // Si no estoy en la home, navego a ella.
+      handleNavigation("hero");
+    }
   };
 
   return (
     <header className="header">
       {menuOpen && <div className="backdrop" onClick={toggleMenu}></div>}
 
-      <div className="logo-container" onClick={handleLogoClick} style={{ cursor: "pointer" }}>
+      <div className="logo-container" onClick={handleHomeNavigation} style={{ cursor: "pointer" }}>
         <img src={logo} alt="El Rey de las Ojotas" className="logo-img" />
       </div>
 
       <nav className={`nav ${menuOpen ? "open" : ""}`}>
-        <a href="/" onClick={handleInicioClick}>Inicio</a>
+        <a href="/" onClick={handleHomeNavigation}>Inicio</a>
         <Link to="/quienes-somos" onClick={() => setMenuOpen(false)}>Quiénes somos</Link>
-        {/* Enlace "Contacto" modificado para usar <Link> con el hash */}
         <Link to="/#contacto" onClick={() => setMenuOpen(false)}>Contacto</Link>
       </nav>
 
