@@ -3,14 +3,45 @@ import "./Catalog.css";
 
 const Catalog = ({ categories, selectedCategory }) => {
   const [lightboxImage, setLightboxImage] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(null);
+  const [lightboxGallery, setLightboxGallery] = useState([]);
+  const [currentNavIndex, setCurrentNavIndex] = useState(null);
 
   if (!Array.isArray(categories) || categories.length === 0) {
     return <p>Cargando galería...</p>;
   }
 
+  // Crea el array de imágenes a mostrar en la cuadrícula principal.
   const allImagesFlat = useMemo(() => {
-    const images = categories.flatMap((category) =>
+    const featuredImages = [];
+    const uniqueSubcategories = new Set();
+    
+    const sourceCategories = selectedCategory
+      ? [categories.find(cat => cat.name === selectedCategory)].filter(Boolean)
+      : categories;
+
+    sourceCategories.forEach(category => {
+      category.galleryImages.forEach(imageItem => {
+        if (!uniqueSubcategories.has(imageItem.name)) {
+          uniqueSubcategories.add(imageItem.name);
+          featuredImages.push({
+            src: imageItem.src,
+            category: category.name,
+            alt: imageItem.name,
+            description: imageItem.description,
+          });
+        }
+      });
+    });
+
+    return featuredImages;
+  }, [categories, selectedCategory]);
+
+  const pageTitle = selectedCategory ? selectedCategory : "Nuestros productos";
+
+  // Función para abrir el lightbox y definir la galería
+  const openLightbox = useCallback((image) => {
+    // La galería del lightbox (para las miniaturas)
+    const fullGallery = categories.flatMap(category =>
       (category.galleryImages || []).map((imageItem) => ({
         src: imageItem.src,
         category: category.name,
@@ -18,38 +49,52 @@ const Catalog = ({ categories, selectedCategory }) => {
         description: imageItem.description,
       }))
     );
-    return selectedCategory
-      ? images.filter((image) => image.category === selectedCategory)
-      : images;
-  }, [categories, selectedCategory]);
 
-  const pageTitle = selectedCategory ? selectedCategory : "Nuestros productos";
+    const filteredGallery = selectedCategory
+      ? fullGallery.filter(img => img.category === selectedCategory && img.alt === image.alt)
+      : fullGallery.filter(img => img.alt === image.alt);
+    
+    setLightboxGallery(filteredGallery);
+    setLightboxImage(filteredGallery[0]);
+    
+    // El índice de navegación (para las flechas)
+    const navIndex = allImagesFlat.findIndex(img => img.alt === image.alt);
+    setCurrentNavIndex(navIndex);
+  }, [categories, selectedCategory, allImagesFlat]);
 
-  const openLightbox = useCallback((image, index) => {
-    setLightboxImage(image);
-    setCurrentIndex(index);
-  }, []);
+  const navigateAndOpen = useCallback((newIndex) => {
+    if (newIndex >= 0 && newIndex < allImagesFlat.length) {
+        const newImage = allImagesFlat[newIndex];
+        const fullGallery = categories.flatMap(category =>
+            (category.galleryImages || []).map((imageItem) => ({
+                src: imageItem.src,
+                category: category.name,
+                alt: imageItem.name,
+                description: imageItem.description,
+            }))
+        );
+
+        const filteredGallery = selectedCategory
+            ? fullGallery.filter(img => img.category === selectedCategory && img.alt === newImage.alt)
+            : fullGallery.filter(img => img.alt === newImage.alt);
+
+        setLightboxGallery(filteredGallery);
+        setLightboxImage(filteredGallery[0]);
+        setCurrentNavIndex(newIndex);
+    }
+  }, [categories, selectedCategory, allImagesFlat]);
 
   const goToNext = useCallback(() => {
-    if (currentIndex < allImagesFlat.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-      setLightboxImage(allImagesFlat[currentIndex + 1]);
-    } else {
-      setCurrentIndex(0);
-      setLightboxImage(allImagesFlat[0]);
-    }
-  }, [currentIndex, allImagesFlat]);
+    const nextIndex = (currentNavIndex + 1) % allImagesFlat.length;
+    navigateAndOpen(nextIndex);
+  }, [currentNavIndex, allImagesFlat, navigateAndOpen]);
 
   const goToPrevious = useCallback(() => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-      setLightboxImage(allImagesFlat[currentIndex - 1]);
-    } else {
-      setCurrentIndex(allImagesFlat.length - 1);
-      setLightboxImage(allImagesFlat[allImagesFlat.length - 1]);
-    }
-  }, [currentIndex, allImagesFlat]);
+    const prevIndex = (currentNavIndex - 1 + allImagesFlat.length) % allImagesFlat.length;
+    navigateAndOpen(prevIndex);
+  }, [currentNavIndex, allImagesFlat, navigateAndOpen]);
 
+  // Manejadores para el deslizamiento táctil
   const [touchStartX, setTouchStartX] = useState(0);
 
   const handleTouchStart = useCallback((e) => {
@@ -77,28 +122,23 @@ const Catalog = ({ categories, selectedCategory }) => {
   const handleTouchEnd = useCallback(() => {
     setTouchStartX(0);
   }, []);
-
+  
   return (
     <section id="catalogo" className="catalog">
       <div className="catalog-header">
         <h2>{pageTitle}</h2>
-        {!selectedCategory && (
-          <p>
-            Explora nuestra galería completa o filtra por tus categorías
-            favoritas.
-          </p>
-        )}
+        <p>
+          {selectedCategory
+            ? `Explora los tipos de productos que ofrecemos para ${selectedCategory}.`
+            : "Explora una selección de nuestros productos más destacados."}
+        </p>
       </div>
       <div className="catalog-grid">
         {allImagesFlat.map((image, index) => (
           <div
             key={index}
-            className={`catalog-grid-item ${
-              !selectedCategory || selectedCategory === image.category
-                ? "visible"
-                : "hidden"
-            }`}
-            onClick={() => openLightbox(image, index)}
+            className={`catalog-grid-item visible`}
+            onClick={() => openLightbox(image)}
           >
             <img src={image.src} alt={image.alt} loading="lazy" />
             <div className="image-overlay">
@@ -120,7 +160,6 @@ const Catalog = ({ categories, selectedCategory }) => {
             <button className="lightbox-nav-button prev" onClick={goToPrevious}>
               &#10094;
             </button>
-
             <img
               src={lightboxImage.src}
               alt={lightboxImage.alt}
@@ -129,8 +168,23 @@ const Catalog = ({ categories, selectedCategory }) => {
             <div className="lightbox-details">
               <h3>{lightboxImage.alt}</h3>
               <p>{lightboxImage.description}</p>
+              {lightboxGallery.length > 1 && (
+                <div className="lightbox-thumbnails">
+                  {lightboxGallery.map((img, index) => (
+                    <img
+                      key={index}
+                      src={img.src}
+                      alt={img.alt}
+                      className={`thumbnail ${index === 0 ? "active" : ""}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setLightboxImage(img);
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
-
             <button className="lightbox-nav-button next" onClick={goToNext}>
               &#10095;
             </button>

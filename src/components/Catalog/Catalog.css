@@ -336,3 +336,28 @@
     display: block;
   }
 }
+
+.lightbox-thumbnails {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  overflow-x: auto; /* Permite desplazamiento horizontal si hay muchas miniaturas */
+  padding-bottom: 10px; /* Espacio para el scrollbar */
+  white-space: nowrap; /* Evita que las miniaturas se envuelvan en la siguiente línea */
+}
+
+.thumbnail {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.thumbnail.active {
+  border-color: #007bff; /* Color para el borde de la miniatura seleccionada */
+  transform: scale(1.1);
+}
