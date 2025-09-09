@@ -4,14 +4,13 @@ import "./Catalog.css";
 const Catalog = ({ categories, selectedCategory }) => {
   const [lightboxImage, setLightboxImage] = useState(null);
   const [lightboxGallery, setLightboxGallery] = useState([]);
-  const [currentNavIndex, setCurrentNavIndex] = useState(null); // Para navegación entre subcategorías (flechas)
-  const [currentThumbnailIndex, setCurrentThumbnailIndex] = useState(0); // Para miniatura activa (clics en miniaturas)
+  const [currentNavIndex, setCurrentNavIndex] = useState(null);
+  const [currentThumbnailIndex, setCurrentThumbnailIndex] = useState(0);
 
   if (!Array.isArray(categories) || categories.length === 0) {
     return <p>Cargando galería...</p>;
   }
 
-  // Crea el array de imágenes a mostrar en la cuadrícula principal.
   const allImagesFlat = useMemo(() => {
     const featuredImages = [];
     const uniqueSubcategories = new Set();
@@ -39,9 +38,7 @@ const Catalog = ({ categories, selectedCategory }) => {
 
   const pageTitle = selectedCategory ? selectedCategory : "Nuestros productos";
 
-  // Función para abrir el lightbox y definir la galería
   const openLightbox = useCallback((image) => {
-    // La galería del lightbox (para las miniaturas)
     const fullGallery = categories.flatMap(category =>
       (category.galleryImages || []).map((imageItem) => ({
         src: imageItem.src,
@@ -56,10 +53,9 @@ const Catalog = ({ categories, selectedCategory }) => {
       : fullGallery.filter(img => img.alt === image.alt);
     
     setLightboxGallery(filteredGallery);
-    setLightboxImage(filteredGallery[0]); // Mostrar la primera imagen de la subcategoría
-    setCurrentThumbnailIndex(0); // Marcar la primera miniatura como activa
+    setLightboxImage(filteredGallery[0]);
+    setCurrentThumbnailIndex(0);
     
-    // El índice de navegación (para las flechas)
     const navIndex = allImagesFlat.findIndex(img => img.alt === image.alt);
     setCurrentNavIndex(navIndex);
   }, [categories, selectedCategory, allImagesFlat]);
@@ -81,8 +77,8 @@ const Catalog = ({ categories, selectedCategory }) => {
             : fullGallery.filter(img => img.alt === newImage.alt);
 
         setLightboxGallery(filteredGallery);
-        setLightboxImage(filteredGallery[0]); // Mostrar la primera imagen de la nueva subcategoría
-        setCurrentThumbnailIndex(0); // Resetear la miniatura activa a la primera
+        setLightboxImage(filteredGallery[0]);
+        setCurrentThumbnailIndex(0);
         setCurrentNavIndex(newNavIndex);
     }
   }, [categories, selectedCategory, allImagesFlat]);
@@ -97,7 +93,6 @@ const Catalog = ({ categories, selectedCategory }) => {
     navigateAndOpen(prevIndex);
   }, [currentNavIndex, allImagesFlat, navigateAndOpen]);
 
-  // Manejadores para el deslizamiento táctil
   const [touchStartX, setTouchStartX] = useState(0);
 
   const handleTouchStart = useCallback((e) => {
@@ -160,6 +155,9 @@ const Catalog = ({ categories, selectedCategory }) => {
           onTouchEnd={handleTouchEnd}
         >
           <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <button className="lightbox-close" onClick={() => setLightboxImage(null)}>
+              ×
+            </button>
             <button className="lightbox-nav-button prev" onClick={goToPrevious}>
               &#10094;
             </button>
@@ -178,12 +176,11 @@ const Catalog = ({ categories, selectedCategory }) => {
                       key={index}
                       src={img.src}
                       alt={img.alt}
-                      // Aquí se usa currentThumbnailIndex
                       className={`thumbnail ${index === currentThumbnailIndex ? "active" : ""}`}
                       onClick={(e) => {
                         e.stopPropagation();
                         setLightboxImage(img);
-                        setCurrentThumbnailIndex(index); // Actualizar el índice de la miniatura activa
+                        setCurrentThumbnailIndex(index);
                       }}
                     />
                   ))}
@@ -194,9 +191,6 @@ const Catalog = ({ categories, selectedCategory }) => {
               &#10095;
             </button>
           </div>
-          <button className="lightbox-close" onClick={() => setLightboxImage(null)}>
-            ×
-          </button>
         </div>
       )}
     </section>
