@@ -4,7 +4,8 @@ import "./Catalog.css";
 const Catalog = ({ categories, selectedCategory }) => {
   const [lightboxImage, setLightboxImage] = useState(null);
   const [lightboxGallery, setLightboxGallery] = useState([]);
-  const [currentNavIndex, setCurrentNavIndex] = useState(null);
+  const [currentNavIndex, setCurrentNavIndex] = useState(null); // Para navegación entre subcategorías (flechas)
+  const [currentThumbnailIndex, setCurrentThumbnailIndex] = useState(0); // Para miniatura activa (clics en miniaturas)
 
   if (!Array.isArray(categories) || categories.length === 0) {
     return <p>Cargando galería...</p>;
@@ -55,16 +56,17 @@ const Catalog = ({ categories, selectedCategory }) => {
       : fullGallery.filter(img => img.alt === image.alt);
     
     setLightboxGallery(filteredGallery);
-    setLightboxImage(filteredGallery[0]);
+    setLightboxImage(filteredGallery[0]); // Mostrar la primera imagen de la subcategoría
+    setCurrentThumbnailIndex(0); // Marcar la primera miniatura como activa
     
     // El índice de navegación (para las flechas)
     const navIndex = allImagesFlat.findIndex(img => img.alt === image.alt);
     setCurrentNavIndex(navIndex);
   }, [categories, selectedCategory, allImagesFlat]);
 
-  const navigateAndOpen = useCallback((newIndex) => {
-    if (newIndex >= 0 && newIndex < allImagesFlat.length) {
-        const newImage = allImagesFlat[newIndex];
+  const navigateAndOpen = useCallback((newNavIndex) => {
+    if (newNavIndex >= 0 && newNavIndex < allImagesFlat.length) {
+        const newImage = allImagesFlat[newNavIndex];
         const fullGallery = categories.flatMap(category =>
             (category.galleryImages || []).map((imageItem) => ({
                 src: imageItem.src,
@@ -79,8 +81,9 @@ const Catalog = ({ categories, selectedCategory }) => {
             : fullGallery.filter(img => img.alt === newImage.alt);
 
         setLightboxGallery(filteredGallery);
-        setLightboxImage(filteredGallery[0]);
-        setCurrentNavIndex(newIndex);
+        setLightboxImage(filteredGallery[0]); // Mostrar la primera imagen de la nueva subcategoría
+        setCurrentThumbnailIndex(0); // Resetear la miniatura activa a la primera
+        setCurrentNavIndex(newNavIndex);
     }
   }, [categories, selectedCategory, allImagesFlat]);
 
@@ -175,10 +178,12 @@ const Catalog = ({ categories, selectedCategory }) => {
                       key={index}
                       src={img.src}
                       alt={img.alt}
-                      className={`thumbnail ${index === 0 ? "active" : ""}`}
+                      // Aquí se usa currentThumbnailIndex
+                      className={`thumbnail ${index === currentThumbnailIndex ? "active" : ""}`}
                       onClick={(e) => {
                         e.stopPropagation();
                         setLightboxImage(img);
+                        setCurrentThumbnailIndex(index); // Actualizar el índice de la miniatura activa
                       }}
                     />
                   ))}

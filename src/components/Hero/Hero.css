@@ -1,11 +1,14 @@
 .hero {
   position: relative;
   width: 100%;
-  height: calc(85vh - 80px);
+  /* CAMBIO CLAVE: Usamos min-height para que el banner pueda expandirse si el contenido es más alto. */
+  min-height: calc(85vh - 80px);
   overflow: hidden;
   font-family: 'Poppins', sans-serif;
-  /* NUEVO: Permite que el contenido no se desplace al intentar deslizar */
   touch-action: pan-y; 
+  /* Aseguramos que el padding y border no afecten la altura total */
+  box-sizing: border-box; 
+  padding-top: 80px;
 }
 
 .hero-slide {
@@ -58,8 +61,9 @@
 }
 
 .hero-text h1 {
+  /* CAMBIO CLAVE: Quitamos 'nowrap' para que el texto se ajuste en varias líneas. */
   font-size: clamp(2.5rem, 8vw, 5rem);
-  white-space: nowrap;
+  white-space: normal;
   margin: 0;
   font-weight: 700;
   line-height: 1.2;
@@ -67,7 +71,7 @@
 }
 
 .hero-text p {
-  font-size: 1.7rem;
+  font-size: clamp(1rem, 3vw, 1.7rem);
   margin-top: 1rem;
   margin-bottom: 4rem;
   text-align: center;
@@ -159,15 +163,16 @@
 /* ----------------------- */
 /* Mobile */
 @media (max-width: 768px) {
-  /* Arreglo para el nav que tapa el banner */
   .hero {
-    margin-top: 60px; /* Ajusta este valor a la altura de tu navbar en móvil */
+    /* Mantenemos la altura que deseabas en mobile */
     height: 400px;
+    margin-top: 60px;
+    padding-top: 0;
   }
 
-  /* Centrado en mobile ya lo maneja .hero-slide */
   .hero-slide {
     background-position: center;
+    height: 100%;
   }
 
   .hero-text {
