@@ -13,7 +13,7 @@ import WhatsAppButton from "./components/WhatsAppButton/WhatsAppButton";
 import ThankYouPage from "./components/ThankYouPage/ThankYouPage";
 import Text from "./components/Text/Text";
 
-// --- Importaciones de imágenes (sin cambios) ---
+// --- Importaciones de imágenes (tus archivos originales) ---
 import eventoCardImg from "./assets/img/evento.png";
 import hotelesCardImg from "./assets/img/hoteles.png";
 import empresasCardImg from "./assets/img/empresas.png";
@@ -31,36 +31,36 @@ import img11 from "./assets/img/11.png";
 import img12 from "./assets/img/12.png";
 
 
-// --- Data (sin cambios) ---
+// --- Data con descripciones añadidas ---
 const categoriesData = [
   {
     name: "Eventos",
     cardImg: eventoCardImg,
     galleryImages: [
-      { src: img6, name: "Personalizadas" },
-      { src: img4, name: "Lisas" },
-      { src: img10, name: "Personalizadas" },
-      { src: img3, name: "Descartables" },
+      { src: img6, name: "Personalizadas", description: "Goma Eva 16 mm de espesor, tira pvc, Suela Antideslizante. Colores varios." },
+      { src: img4, name: "Lisas", description: "Goma Eva 16 mm, tira pvc, suela Antideslizante. Colores varios." },
+      { src: img10, name: "Personalizadas", description: "Goma Eva 16 mm de espesor, tira pvc, Suela Antideslizante. Colores varios." },
+      { src: img3, name: "Descartables", description: "Goma Eva 3mm suela Antideslizante." },
     ],
   },
   {
     name: "Empresas",
     cardImg: empresasCardImg,
     galleryImages: [
-      { src: img1, name: "Personalizadas" },
-      { src: img2, name: "Personalizadas" },
-      { src: img11, name: "Lisas" },
+      { src: img1, name: "Personalizadas", description: "Goma Eva 16 mm de espesor, tira pvc, Suela Antideslizante. Colores varios." },
+      { src: img2, name: "Personalizadas", description: "Goma Eva 16 mm de espesor, tira pvc, Suela Antideslizante. Colores varios." },
+      { src: img11, name: "Lisas", description: "Goma Eva 16 mm, tira pvc, suela Antideslizante. Colores varios." },
     ],
   },
   {
     name: "Hoteles / Spa",
     cardImg: hotelesCardImg,
     galleryImages: [
-      { src: img5, name: "Descartables" },
-      { src: img7, name: "Personalizadas" },
-      { src: img8, name: "Personalizadas" },
-      { src: img9, name: "Lisas" },
-      { src: img12, name: "Personalizadas" },
+      { src: img5, name: "Descartables", description: "Goma Eva 3mm suela Antideslizante." },
+      { src: img7, name: "Personalizadas", description: "Goma Eva 16 mm de espesor, tira pvc, Suela Antideslizante. Colores varios." },
+      { src: img8, name: "Personalizadas", description: "Goma Eva 16 mm de espesor, tira pvc, Suela Antideslizante. Colores varios." },
+      { src: img9, name: "Lisas", description: "Goma Eva 16 mm, tira pvc, suela Antideslizante. Colores varios." },
+      { src: img12, name: "Personalizadas", description: "Goma Eva 16 mm de espesor, tira pvc, Suela Antideslizante. Colores varios." },
     ],
   },
 ];
@@ -94,7 +94,6 @@ const App = () => {
       <Header />
       <ScrollToHashElement />
       <Routes>
-        {/* Ruta para la Home con todos los componentes */}
         <Route
           path="/"
           element={
@@ -118,7 +117,6 @@ const App = () => {
             </>
           }
         />
-        {/* Ruta para la página de Contacto */}
         <Route path="/contacto" element={<Contact />} />
         <Route path="/quienes-somos" element={<Us />} />
         <Route path="/gracias" element={<ThankYouPage />} />
