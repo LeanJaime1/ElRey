@@ -42,6 +42,8 @@ const categoriesData = [
       { src: img4, name: "Lisas", description: "Goma Eva 16 mm, tira pvc, suela Antideslizante. Colores varios." },
       { src: img10, name: "Personalizadas", description: "Goma Eva 16 mm de espesor, tira pvc, Suela Antideslizante. Colores varios." },
       { src: img3, name: "Descartables", description: "Goma Eva 3mm suela Antideslizante." },
+      { src: img11, name: "Lisas", description: "Goma Eva 16 mm, tira pvc, suela Antideslizante. Colores varios." },
+      { src: img9, name: "Lisas", description: "Goma Eva 16 mm, tira pvc, suela Antideslizante. Colores varios." },
     ],
   },
   {
@@ -52,6 +54,8 @@ const categoriesData = [
       { src: img2, name: "Personalizadas", description: "Goma Eva 16 mm de espesor, tira pvc, Suela Antideslizante. Colores varios." },
       { src: img11, name: "Lisas", description: "Goma Eva 16 mm, tira pvc, suela Antideslizante. Colores varios." },
       { src: img13, name: "Sublimación", description: "Ojotas para sublimar de goma Eva 16 mm de espesor tira de PVC, superficie a estampar  %100 polister. Talles del 19 al 46 colores varios" },
+      { src: img4, name: "Lisas", description: "Goma Eva 16 mm, tira pvc, suela Antideslizante. Colores varios." },
+      { src: img9, name: "Lisas", description: "Goma Eva 16 mm, tira pvc, suela Antideslizante. Colores varios." },
     ],
   },
   {
@@ -63,6 +67,8 @@ const categoriesData = [
       { src: img8, name: "Personalizadas", description: "Goma Eva 16 mm de espesor, tira pvc, Suela Antideslizante. Colores varios." },
       { src: img9, name: "Lisas", description: "Goma Eva 16 mm, tira pvc, suela Antideslizante. Colores varios." },
       { src: img12, name: "Personalizadas", description: "Goma Eva 16 mm de espesor, tira pvc, Suela Antideslizante. Colores varios." },
+      { src: img11, name: "Lisas", description: "Goma Eva 16 mm, tira pvc, suela Antideslizante. Colores varios." },
+      { src: img4, name: "Lisas", description: "Goma Eva 16 mm, tira pvc, suela Antideslizante. Colores varios." },
     ],
   },
 ];
