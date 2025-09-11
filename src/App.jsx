@@ -29,6 +29,7 @@ import img9 from "./assets/img/9.png";
 import img10 from "./assets/img/10.png";
 import img11 from "./assets/img/11.png";
 import img12 from "./assets/img/12.png";
+import img13 from "./assets/img/13.png";
 
 
 // --- Data con descripciones añadidas ---
@@ -50,6 +51,7 @@ const categoriesData = [
       { src: img1, name: "Personalizadas", description: "Goma Eva 16 mm de espesor, tira pvc, Suela Antideslizante. Colores varios." },
       { src: img2, name: "Personalizadas", description: "Goma Eva 16 mm de espesor, tira pvc, Suela Antideslizante. Colores varios." },
       { src: img11, name: "Lisas", description: "Goma Eva 16 mm, tira pvc, suela Antideslizante. Colores varios." },
+      { src: img13, name: "Sublimación", description: "Ojotas para sublimar de goma Eva 16 mm de espesor tira de PVC, superficie a estampar  %100 polister. Talles del 19 al 46 colores varios" },
     ],
   },
   {
