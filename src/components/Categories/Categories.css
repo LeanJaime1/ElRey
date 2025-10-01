@@ -5,7 +5,7 @@
 }
 
 .categories-title {
-  margin-top: 40px;
+  margin-top: 40px; /* Reducción del espacio superior */
   text-align: center;
   margin-bottom: 1rem;
   font-size: 2rem;
@@ -88,7 +88,7 @@
   }
 
   .category-card:hover img {
-    transform: scale(1.2); /* CAMBIO APLICADO: Zoom más pronunciado */
+    transform: scale(1.1);
   }
 
   .category-card:hover .overlay {
@@ -180,3 +180,5 @@
     transform: scale(0.95);
   }
 }
+
+
