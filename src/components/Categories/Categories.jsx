@@ -101,6 +101,7 @@ const Categories = ({ categories, setSelectedCategory }) => {
               return (
                 <div
                   key={category.name}
+                  id={category.id} // <--- ID AÑADIDO
                   className={`category-card ${position}`}
                   onClick={() => setActiveIndex(index)}
                 >
@@ -128,6 +129,7 @@ const Categories = ({ categories, setSelectedCategory }) => {
           categories.map((category, index) => (
             <div
               key={category.name}
+              id={category.id} // <--- ID AÑADIDO
               className="category-card"
               onClick={() => handleCategorySelection(category.name, index)}
             >
