@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Categories.css";
 
-// Hook para detectar el tamaño de la ventana
 const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState({ width: undefined });
   useEffect(() => {
@@ -16,22 +16,27 @@ const useWindowSize = () => {
 };
 
 const Categories = ({ categories, setSelectedCategory }) => {
-  const [activeIndex, setActiveIndex] = useState(1);
+  const [activeIndex, setActiveIndex] = useState(0);
   const { width } = useWindowSize();
   const isMobile = width <= 768;
+  const navigate = useNavigate();
 
-  // --- ESTADOS PARA MANEJAR EL SWIPE ---
+  // swipe
   const [touchStartX, setTouchStartX] = useState(0);
   const [touchEndX, setTouchEndX] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
 
-  // Lógica para seleccionar una categoría y hacer scroll.
-  const handleCategorySelection = (categoryName, index) => {
-    // Fija la categoría seleccionada como la "activa" para que se quede en el centro.
+  const handleCategorySelection = (category, index) => {
     setActiveIndex(index);
-    setSelectedCategory(categoryName);
 
-    // Lógica de scroll: se ejecuta tanto en escritorio como en móvil.
+    // 1) actualizo el estado local de la app (por si otros componentes dependen de ello)
+    setSelectedCategory(category);
+
+    // 2) navigo a la ruta de la categoría y le paso el objeto por state (esto asegura que
+    //    CategoryCatalog lo reciba como location.state.selectedCategory al llegar).
+    navigate(`/${category.id}`, { state: { selectedCategory: category } });
+
+    // 3) scroll (igual que antes)
     setTimeout(() => {
       const catalogSection = document.getElementById("catalogo");
       if (catalogSection) {
@@ -47,7 +52,6 @@ const Categories = ({ categories, setSelectedCategory }) => {
     }, 100);
   };
 
-  // --- FUNCIONES PARA LOS EVENTOS TÁCTILES ---
   const handleTouchStart = (e) => {
     setTouchStartX(e.touches[0].clientX);
     setIsSwiping(true);
@@ -61,23 +65,18 @@ const Categories = ({ categories, setSelectedCategory }) => {
 
   const handleTouchEnd = () => {
     if (!isSwiping) return;
-
     const swipeDistance = touchStartX - touchEndX;
-
-    // Solo ejecuta la lógica de swipe si la distancia es significativa.
     if (Math.abs(swipeDistance) > 75) {
       if (swipeDistance > 0) {
-        // Deslizar hacia la izquierda
         setActiveIndex((prevIndex) =>
           prevIndex < categories.length - 1 ? prevIndex + 1 : prevIndex
         );
       } else {
-        // Deslizar hacia la derecha
         setActiveIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : 0));
       }
     }
     setIsSwiping(false);
-    setTouchStartX(0); // Resetear para el próximo swipe
+    setTouchStartX(0);
     setTouchEndX(0);
   };
 
@@ -86,7 +85,6 @@ const Categories = ({ categories, setSelectedCategory }) => {
       <h1 className="categories-title">CATEGORÍAS</h1>
       <div className="categories-container">
         {isMobile ? (
-          // Vista Móvil: carrusel deslizable con botón de selección
           <div
             className="mobile-carousel-wrapper"
             onTouchStart={handleTouchStart}
@@ -100,8 +98,8 @@ const Categories = ({ categories, setSelectedCategory }) => {
 
               return (
                 <div
-                  key={category.name}
-                  id={category.id} // <--- ID AÑADIDO
+                  key={category.id}
+                  id={category.id}
                   className={`category-card ${position}`}
                   onClick={() => setActiveIndex(index)}
                 >
@@ -113,8 +111,8 @@ const Categories = ({ categories, setSelectedCategory }) => {
                     <button
                       className="category-select-button"
                       onClick={(e) => {
-                        e.stopPropagation(); // Evita que el click se propague a la tarjeta.
-                        handleCategorySelection(category.name, index);
+                        e.stopPropagation();
+                        handleCategorySelection(category, index);
                       }}
                     >
                       {category.name}
@@ -125,18 +123,14 @@ const Categories = ({ categories, setSelectedCategory }) => {
             })}
           </div>
         ) : (
-          // Vista de Escritorio: comportamiento de hover
           categories.map((category, index) => (
             <div
-              key={category.name}
-              id={category.id} // <--- ID AÑADIDO
+              key={category.id}
+              id={category.id}
               className="category-card"
-              onClick={() => handleCategorySelection(category.name, index)}
+              onClick={() => handleCategorySelection(category, index)}
             >
-              <img
-                src={category.cardImg}
-                alt={`Ojotas para ${category.name}`}
-              />
+              <img src={category.cardImg} alt={`Ojotas para ${category.name}`} />
               <div className="initial-text">
                 <span>{category.name}</span>
               </div>

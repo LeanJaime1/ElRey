@@ -11,13 +11,14 @@ const Catalog = ({ categories, selectedCategory }) => {
     return <p>Cargando galería...</p>;
   }
 
+  // 🟢 Si hay categoría seleccionada, trabajamos directamente con ese objeto
+  const sourceCategories = selectedCategory
+    ? [selectedCategory]
+    : categories;
+
   const allImagesFlat = useMemo(() => {
     const featuredImages = [];
     const uniqueSubcategories = new Set();
-    
-    const sourceCategories = selectedCategory
-      ? [categories.find(cat => cat.name === selectedCategory)].filter(Boolean)
-      : categories;
 
     sourceCategories.forEach(category => {
       category.galleryImages.forEach(imageItem => {
@@ -36,7 +37,8 @@ const Catalog = ({ categories, selectedCategory }) => {
     return featuredImages;
   }, [categories, selectedCategory]);
 
-  const pageTitle = selectedCategory ? selectedCategory : "Nuestros productos";
+  // 🟢 Título seguro
+  const pageTitle = selectedCategory ? selectedCategory.name : "Nuestros productos";
 
   const openLightbox = useCallback((image) => {
     const fullGallery = categories.flatMap(category =>
@@ -49,37 +51,37 @@ const Catalog = ({ categories, selectedCategory }) => {
     );
 
     const filteredGallery = selectedCategory
-      ? fullGallery.filter(img => img.category === selectedCategory && img.alt === image.alt)
+      ? fullGallery.filter(img => img.category === selectedCategory.name && img.alt === image.alt)
       : fullGallery.filter(img => img.alt === image.alt);
-    
+
     setLightboxGallery(filteredGallery);
     setLightboxImage(filteredGallery[0]);
     setCurrentThumbnailIndex(0);
-    
+
     const navIndex = allImagesFlat.findIndex(img => img.alt === image.alt);
     setCurrentNavIndex(navIndex);
   }, [categories, selectedCategory, allImagesFlat]);
 
   const navigateAndOpen = useCallback((newNavIndex) => {
     if (newNavIndex >= 0 && newNavIndex < allImagesFlat.length) {
-        const newImage = allImagesFlat[newNavIndex];
-        const fullGallery = categories.flatMap(category =>
-            (category.galleryImages || []).map((imageItem) => ({
-                src: imageItem.src,
-                category: category.name,
-                alt: imageItem.name,
-                description: imageItem.description,
-            }))
-        );
+      const newImage = allImagesFlat[newNavIndex];
+      const fullGallery = categories.flatMap(category =>
+        (category.galleryImages || []).map((imageItem) => ({
+          src: imageItem.src,
+          category: category.name,
+          alt: imageItem.name,
+          description: imageItem.description,
+        }))
+      );
 
-        const filteredGallery = selectedCategory
-            ? fullGallery.filter(img => img.category === selectedCategory && img.alt === newImage.alt)
-            : fullGallery.filter(img => img.alt === newImage.alt);
+      const filteredGallery = selectedCategory
+        ? fullGallery.filter(img => img.category === selectedCategory.name && img.alt === newImage.alt)
+        : fullGallery.filter(img => img.alt === newImage.alt);
 
-        setLightboxGallery(filteredGallery);
-        setLightboxImage(filteredGallery[0]);
-        setCurrentThumbnailIndex(0);
-        setCurrentNavIndex(newNavIndex);
+      setLightboxGallery(filteredGallery);
+      setLightboxImage(filteredGallery[0]);
+      setCurrentThumbnailIndex(0);
+      setCurrentNavIndex(newNavIndex);
     }
   }, [categories, selectedCategory, allImagesFlat]);
 
@@ -120,14 +122,14 @@ const Catalog = ({ categories, selectedCategory }) => {
   const handleTouchEnd = useCallback(() => {
     setTouchStartX(0);
   }, []);
-  
+
   return (
     <section id="catalogo" className="catalog">
       <div className="catalog-header">
         <h2>{pageTitle}</h2>
         <p>
           {selectedCategory
-            ? `Explora los tipos de productos que ofrecemos para ${selectedCategory}.`
+            ? `Explora los tipos de productos que ofrecemos para ${selectedCategory.name}.`
             : "Explora una selección de nuestros productos más destacados."}
         </p>
       </div>
