@@ -76,51 +76,32 @@ const categoriesData = [
   },
 ];
 
-// Componente que maneja hero, categories, catalog y sincroniza con la URL
-const CategoryCatalog = ({ categoriesData }) => {
+const CategoryCatalog = () => {
   const location = useLocation();
   const { categoryId } = useParams();
-
-  // Estado local para selección hecha por interacción (click)
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-  // Si el navegador trajo un objeto por state (navigate(..., { state: { selectedCategory } }))
   const locationStateCategory = location?.state?.selectedCategory || null;
+  const categoryFromUrl = categoryId ? categoriesData.find(cat => cat.id === categoryId) : null;
+  const finalSelectedCategory = locationStateCategory || categoryFromUrl || selectedCategory;
 
-  // Si la URL tiene categoryId, busco el objeto en categoriesData
-  const categoryFromUrl = categoryId ? categoriesData.find(cat => cat.path === categoryId || cat.id === categoryId) : null;
-
-  // Determino la categoría "final" de forma segura:
-  // 1) primero la que vino en location.state (click -> navigate con state)
-  // 2) sino la que corresponde a la URL
-  // 3) sino la seleccionada manualmente en este estado
-  const finalSelectedCategoryCandidate = locationStateCategory || categoryFromUrl || selectedCategory;
-
-  // Aseguro que lo que le paso al Catalog sea siempre un OBJETO completo o null
-  const finalSelectedCategory = (() => {
-    if (!finalSelectedCategoryCandidate) return null;
-    // Si viene un string por algún motivo, buscar el objeto
-    if (typeof finalSelectedCategoryCandidate === "string") {
-      return categoriesData.find(cat => cat.id === finalSelectedCategoryCandidate || cat.path === finalSelectedCategoryCandidate) || null;
-    }
-    // Si ya es un objeto con id, preferir el objeto desde categoriesData para mantener consistencia
-    if (finalSelectedCategoryCandidate && finalSelectedCategoryCandidate.id) {
-      return categoriesData.find(cat => cat.id === finalSelectedCategoryCandidate.id) || finalSelectedCategoryCandidate;
-    }
-    return null;
-  })();
-
-  // Mantengo sincronizado el estado local para evitar inconsistencias futuras
   useEffect(() => {
-    if (locationStateCategory && locationStateCategory !== selectedCategory) {
-      setSelectedCategory(locationStateCategory);
-    } else if (categoryFromUrl && categoryFromUrl !== selectedCategory) {
-      setSelectedCategory(categoryFromUrl);
-    } else if (!categoryId && selectedCategory) {
-      setSelectedCategory(null);
+    if (locationStateCategory && locationStateCategory !== selectedCategory) setSelectedCategory(locationStateCategory);
+    else if (categoryFromUrl && categoryFromUrl !== selectedCategory) setSelectedCategory(categoryFromUrl);
+  }, [locationStateCategory, categoryFromUrl, selectedCategory]);
+
+  // 🔹 Scroll al catálogo cuando cambia la categoría
+  useEffect(() => {
+    if (finalSelectedCategory) {
+      const catalogSection = document.getElementById("catalogo");
+      if (catalogSection) {
+        const headerOffset = 80;
+        const elementPosition = catalogSection.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [locationStateCategory, categoryFromUrl, categoryId]);
+  }, [finalSelectedCategory]);
 
   return (
     <>
@@ -128,16 +109,10 @@ const CategoryCatalog = ({ categoriesData }) => {
       <section id="benefits"><Benefits /></section>
       <Text />
       <section id="categories">
-        <Categories
-          categories={categoriesData}
-          setSelectedCategory={setSelectedCategory}
-        />
+        <Categories categories={categoriesData} setSelectedCategory={setSelectedCategory} />
       </section>
       <section id="catalogo">
-        <Catalog
-          categories={categoriesData}
-          selectedCategory={finalSelectedCategory}
-        />
+        <Catalog categories={categoriesData} selectedCategory={finalSelectedCategory} />
       </section>
       <Contact />
     </>
@@ -153,10 +128,7 @@ const ScrollToHashElement = () => {
       const element = document.getElementById(scrollToId);
       if (element) {
         setTimeout(() => {
-          window.scrollTo({
-            top: element.offsetTop,
-            behavior: "smooth"
-          });
+          window.scrollTo({ top: element.offsetTop, behavior: "smooth" });
         }, 100);
       }
     }
@@ -171,7 +143,7 @@ const App = () => {
       <Header />
       <ScrollToHashElement />
       <Routes>
-        <Route path="/:categoryId?" element={<CategoryCatalog categoriesData={categoriesData} />} />
+        <Route path="/:categoryId?" element={<CategoryCatalog />} />
         <Route path="/contacto" element={<Contact />} />
         <Route path="/quienes-somos" element={<Us />} />
         <Route path="/gracias" element={<ThankYouPage />} />

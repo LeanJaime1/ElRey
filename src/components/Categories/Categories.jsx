@@ -28,28 +28,22 @@ const Categories = ({ categories, setSelectedCategory }) => {
 
   const handleCategorySelection = (category, index) => {
     setActiveIndex(index);
-
-    // 1) actualizo el estado local de la app (por si otros componentes dependen de ello)
     setSelectedCategory(category);
 
-    // 2) navigo a la ruta de la categoría y le paso el objeto por state (esto asegura que
-    //    CategoryCatalog lo reciba como location.state.selectedCategory al llegar).
-    navigate(`/${category.id}`, { state: { selectedCategory: category } });
+    // Actualiza URL sin recargar
+    navigate(`/${category.id}`, { replace: false });
 
-    // 3) scroll (igual que antes)
-    setTimeout(() => {
-      const catalogSection = document.getElementById("catalogo");
-      if (catalogSection) {
-        const headerOffset = 80;
-        const elementPosition = catalogSection.getBoundingClientRect().top;
-        const offsetPosition =
-          elementPosition + window.pageYOffset - headerOffset;
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth",
-        });
-      }
-    }, 100);
+    // Scroll directo al catálogo
+    const catalogSection = document.getElementById("catalogo");
+    if (catalogSection) {
+      const headerOffset = 80;
+      const elementPosition = catalogSection.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
   };
 
   const handleTouchStart = (e) => {
@@ -58,9 +52,7 @@ const Categories = ({ categories, setSelectedCategory }) => {
   };
 
   const handleTouchMove = (e) => {
-    if (isSwiping) {
-      setTouchEndX(e.touches[0].clientX);
-    }
+    if (isSwiping) setTouchEndX(e.touches[0].clientX);
   };
 
   const handleTouchEnd = () => {
@@ -68,11 +60,9 @@ const Categories = ({ categories, setSelectedCategory }) => {
     const swipeDistance = touchStartX - touchEndX;
     if (Math.abs(swipeDistance) > 75) {
       if (swipeDistance > 0) {
-        setActiveIndex((prevIndex) =>
-          prevIndex < categories.length - 1 ? prevIndex + 1 : prevIndex
-        );
+        setActiveIndex((prev) => (prev < categories.length - 1 ? prev + 1 : prev));
       } else {
-        setActiveIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : 0));
+        setActiveIndex((prev) => (prev > 0 ? prev - 1 : 0));
       }
     }
     setIsSwiping(false);
@@ -95,7 +85,6 @@ const Categories = ({ categories, setSelectedCategory }) => {
               let position = "middle";
               if (index < activeIndex) position = "left";
               else if (index > activeIndex) position = "right";
-
               return (
                 <div
                   key={category.id}
@@ -103,10 +92,7 @@ const Categories = ({ categories, setSelectedCategory }) => {
                   className={`category-card ${position}`}
                   onClick={() => setActiveIndex(index)}
                 >
-                  <img
-                    src={category.cardImg}
-                    alt={`Ojotas para ${category.name}`}
-                  />
+                  <img src={category.cardImg} alt={`Ojotas para ${category.name}`} />
                   <div className="overlay">
                     <button
                       className="category-select-button"

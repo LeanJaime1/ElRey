@@ -11,10 +11,7 @@ const Catalog = ({ categories, selectedCategory }) => {
     return <p>Cargando galería...</p>;
   }
 
-  // 🟢 Si hay categoría seleccionada, trabajamos directamente con ese objeto
-  const sourceCategories = selectedCategory
-    ? [selectedCategory]
-    : categories;
+  const sourceCategories = selectedCategory ? [selectedCategory] : categories;
 
   const allImagesFlat = useMemo(() => {
     const featuredImages = [];
@@ -37,7 +34,6 @@ const Catalog = ({ categories, selectedCategory }) => {
     return featuredImages;
   }, [categories, selectedCategory]);
 
-  // 🟢 Título seguro
   const pageTitle = selectedCategory ? selectedCategory.name : "Nuestros productos";
 
   const openLightbox = useCallback((image) => {
@@ -157,17 +153,9 @@ const Catalog = ({ categories, selectedCategory }) => {
           onTouchEnd={handleTouchEnd}
         >
           <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
-            <button className="lightbox-close" onClick={() => setLightboxImage(null)}>
-              ×
-            </button>
-            <button className="lightbox-nav-button prev" onClick={goToPrevious}>
-              &#10094;
-            </button>
-            <img
-              src={lightboxImage.src}
-              alt={lightboxImage.alt}
-              className="lightbox-image"
-            />
+            <button className="lightbox-close" onClick={() => setLightboxImage(null)}>×</button>
+            <button className="lightbox-nav-button prev" onClick={goToPrevious}>&#10094;</button>
+            <img src={lightboxImage.src} alt={lightboxImage.alt} className="lightbox-image" />
             <div className="lightbox-details">
               <h3>{lightboxImage.alt}</h3>
               <p>{lightboxImage.description}</p>
@@ -189,9 +177,7 @@ const Catalog = ({ categories, selectedCategory }) => {
                 </div>
               )}
             </div>
-            <button className="lightbox-nav-button next" onClick={goToNext}>
-              &#10095;
-            </button>
+            <button className="lightbox-nav-button next" onClick={goToNext}>&#10095;</button>
           </div>
         </div>
       )}
