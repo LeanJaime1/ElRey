@@ -12,7 +12,7 @@
     font-family: 'Poppins', sans-serif;
 }
 
-.thank-you-container h1 {
+.thank-you-container h2 {
     font-size: clamp(2rem, 5vw, 3rem);
     color: #333;
     margin-bottom: 1rem;

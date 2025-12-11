@@ -8,7 +8,7 @@ const Us = () => {
     <div className="us-page">
       <Header />
       <main className="us-content">
-        <h1>Quiénes Somos</h1>
+        <h2>Quiénes Somos</h2>
         <p>
           En El Rey de las Ojotas contamos con más de 10 años de experiencia en la fabricación de ojotas lisas, ojotas personalizadas, ojotas para sublimar, ojotas descartables y pantuflas personalizadas, de alta calidad, ideales para empresas, hoteles, eventos corporativos y sociales. Cada par es diseñado a medida, con el logo o identidad visual de tu marca, ofreciendo un producto único que combina confort, estilo y promoción.
         </p>

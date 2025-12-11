@@ -11,7 +11,7 @@ const ThankYouPage = () => {
           <path className="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
         </svg>
       </div>
-      <h1>¡Gracias por contactarnos!</h1>
+      <h2>¡Gracias por contactarnos!</h2>
       <p>Tu mensaje ha sido recibido. Te responderemos a la brevedad.</p>
       {/* Se ha cambiado la ruta del Link para incluir el hash #hero */}
       <Link to="/" className="thank-you-btn">Volver a la página principal</Link>

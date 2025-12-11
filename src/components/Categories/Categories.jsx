@@ -72,7 +72,7 @@ const Categories = ({ categories, setSelectedCategory }) => {
 
   return (
     <div className="categories-wrapper">
-      <h1 className="categories-title">CATEGORÍAS</h1>
+      <h2 className="categories-title">CATEGORÍAS</h2>
       <div className="categories-container">
         {isMobile ? (
           <div
