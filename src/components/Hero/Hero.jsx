@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./Hero.css";
 
-import banner1 from "../../assets/img/banner.png";
-import banner2 from "../../assets/img/banner2.png";
-import banner3 from "../../assets/img/banner3.png";
+import banner1 from "../../assets/img/banner.webp";
+import banner2 from "../../assets/img/banner2.webp";
+import banner3 from "../../assets/img/banner3.webp";
 
 const banners = [
   { src: banner1, title: "¡Diseñá tus propias ojotas!", subtitle: "Personalizá tu estilo. Únicas, cómodas y hechas para vos." },

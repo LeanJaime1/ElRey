@@ -13,22 +13,22 @@ import WhatsAppButton from "./components/WhatsAppButton/WhatsAppButton";
 import ThankYouPage from "./components/ThankYouPage/ThankYouPage";
 import Text from "./components/Text/Text";
 
-import eventoCardImg from "./assets/img/evento.png";
-import hotelesCardImg from "./assets/img/hoteles.png";
-import empresasCardImg from "./assets/img/empresas.png";
-import img1 from "./assets/img/1.png";
-import img2 from "./assets/img/2.png";
-import img3 from "./assets/img/3.png";
-import img4 from "./assets/img/4.png";
-import img5 from "./assets/img/5.png";
-import img6 from "./assets/img/6.png";
-import img7 from "./assets/img/7.png";
-import img8 from "./assets/img/8.png";
-import img9 from "./assets/img/9.png";
-import img10 from "./assets/img/10.png";
-import img11 from "./assets/img/11.png";
-import img12 from "./assets/img/12.png";
-import img13 from "./assets/img/13.png";
+import eventoCardImg from "./assets/img/evento.webp";
+import hotelesCardImg from "./assets/img/hoteles.webp";
+import empresasCardImg from "./assets/img/empresas.webp";
+import img1 from "./assets/img/1.webp";
+import img2 from "./assets/img/2.webp";
+import img3 from "./assets/img/3.webp";
+import img4 from "./assets/img/4.webp";
+import img5 from "./assets/img/5.webp";
+import img6 from "./assets/img/6.webp";
+import img7 from "./assets/img/7.webp";
+import img8 from "./assets/img/8.webp";
+import img9 from "./assets/img/9.webp";
+import img10 from "./assets/img/10.webp";
+import img11 from "./assets/img/11.webp";
+import img12 from "./assets/img/12.webp";
+import img13 from "./assets/img/13.webp";
 
 const categoriesData = [
   {
