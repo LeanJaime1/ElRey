@@ -46,16 +46,16 @@ const Header = () => {
     e.preventDefault();
     setMenuOpen(false);
 
-    // ✅ Lógica mejorada para manejar la navegación a la home.
+    
     if (location.pathname === "/") {
-      // Si ya estoy en la home, hago scroll al hero para "recargar" la vista.
+  
       handleNavigation("hero");
-      // Si además había un hash, lo elimino.
+      
       if (location.hash) {
           navigate("/", { replace: true });
       }
     } else {
-      // Si no estoy en la home, navego a ella.
+     
       handleNavigation("hero");
     }
   };

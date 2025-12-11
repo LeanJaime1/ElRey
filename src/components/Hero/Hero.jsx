@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+
 import "./Hero.css";
 
 import banner1 from "../../assets/img/banner.webp";
@@ -72,6 +72,22 @@ const Hero = () => {
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
     >
+      {}
+      {}
+      <h1 style={{ 
+        position: 'absolute', 
+        width: '1px', 
+        height: '1px', 
+        padding: 0, 
+        margin: '-1px', 
+        overflow: 'hidden', 
+        clip: 'rect(0,0,0,0)', 
+        border: 0 
+      }}>
+        El Rey de las Ojotas - Fábrica de Ojotas Personalizadas y Souvenirs
+      </h1>
+      {}
+
       <button onClick={prevSlide} className="hero-arrow left">
         &lt;
       </button>
@@ -87,9 +103,10 @@ const Hero = () => {
           style={{ backgroundImage: `url(${banner.src})` }}
         >
           <div className="hero-text">
-            <h1>{banner.title}</h1>
+            {}
+            <h2>{banner.title}</h2>
             <p>{banner.subtitle}</p>
-            {/* CAMBIO AQUÍ: Usamos un <a> que apunta al ID del formulario */}
+            
             <a href="#contacto" className="hero-btn">Contactanos</a>
           </div>
         </div>
