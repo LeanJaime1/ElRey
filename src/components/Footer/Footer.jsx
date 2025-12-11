@@ -40,7 +40,7 @@ const Footer = () => {
           <h4>Seguinos</h4>
           <div className="social-icons">
             <a
-              href="https://www.instagram.com"
+              href="https://www.instagram.com/elreydelasojotas"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
