@@ -28,7 +28,8 @@ import img9 from "./assets/img/9.webp";
 import img10 from "./assets/img/10.webp";
 import img11 from "./assets/img/11.webp";
 import img12 from "./assets/img/12.webp";
-import img13 from "./assets/img/13.png";
+import img13 from "./assets/img/13.webp";
+import img14 from "./assets/img/14.png";
 
 const categoriesData = [
   {
@@ -56,6 +57,7 @@ const categoriesData = [
       { src: img11, name: "Lisas", description: "Goma Eva 16 mm, tira pvc, suela Antideslizante. Colores varios." },
       { src: img13, name: "Sublimación", description: "Ojotas para sublimar de goma Eva 16 mm de espesor tira de PVC, superficie a estampar  %100 polister. Talles del 19 al 46 colores varios" },
       { src: img4, name: "Lisas", description: "Goma Eva 16 mm, tira pvc, suela Antideslizante. Colores varios." },
+      { src: img14, name: "Deportes", description: "Ojotas de faja, talles del 35 al 46. Base PVC, expansor y faja cuero sintético, cocidas con forro de goma espuma super acolchadas." },
       { src: img9, name: "Lisas", description: "Goma Eva 16 mm, tira pvc, suela Antideslizante. Colores varios." },
     ],
   },
