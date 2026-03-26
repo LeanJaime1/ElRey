@@ -28,7 +28,7 @@ import img9 from "./assets/img/9.webp";
 import img10 from "./assets/img/10.webp";
 import img11 from "./assets/img/11.webp";
 import img12 from "./assets/img/12.webp";
-import img13 from "./assets/img/13.webp";
+import img13 from "./assets/img/13.png";
 
 const categoriesData = [
   {
