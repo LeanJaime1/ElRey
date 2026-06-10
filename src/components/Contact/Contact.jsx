@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Importa useNavigate
+import { useNavigate } from "react-router-dom"; 
 import "./Contact.css";
 
 const Contact = () => {
-  const navigate = useNavigate(); // Inicializa el hook
+  const navigate = useNavigate(); 
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
+    celular: "",
     categoria: "",
     mensaje: "",
   });
@@ -22,6 +23,10 @@ const Contact = () => {
       case "email":
         if (!value.trim()) return "El email es obligatorio";
         if (!/\S+@\S+\.\S+/.test(value)) return "El email no es válido";
+        break;
+      case "celular":
+        if (!value.trim()) return "El número de celular es obligatorio";
+        if (!/^[0-9\s+:-]+$/.test(value)) return "El formato del celular no es válido";
         break;
       case "categoria":
         if (!value) return "Debes seleccionar una categoría";
@@ -58,6 +63,7 @@ const Contact = () => {
     const validationErrors = {
       nombre: validateField("nombre", formData.nombre),
       email: validateField("email", formData.email),
+      celular: validateField("celular", formData.celular),
       categoria: validateField("categoria", formData.categoria),
       mensaje: validateField("mensaje", formData.mensaje),
     };
@@ -80,7 +86,6 @@ const Contact = () => {
       });
 
       if (response.ok) {
-        // Redirige a la página de agradecimiento
         navigate("/gracias"); 
       } else {
         setSubmitStatus("error");
@@ -133,6 +138,19 @@ const Contact = () => {
           className={errors.email ? "input-error" : ""}
         />
         {errors.email && <p className="error">{errors.email}</p>}
+
+        <label htmlFor="celular">Número de celular</label>
+        <input
+          type="tel"
+          id="celular"
+          name="celular"
+          value={formData.celular}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          placeholder="Tu número de celular"
+          className={errors.celular ? "input-error" : ""}
+        />
+        {errors.celular && <p className="error">{errors.celular}</p>}
 
         <label htmlFor="categoria">Categoría de interés</label>
         <select
