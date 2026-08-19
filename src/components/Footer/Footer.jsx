@@ -9,10 +9,9 @@ const Footer = () => {
   const encodedMessage = encodeURIComponent(defaultMessage);
 
   const handleLinkClick = () => {
-    // Hace scroll al inicio de la página
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
- 
+
   return (
     <footer className="footer">
       <div className="footer-main-content">
@@ -62,8 +61,39 @@ const Footer = () => {
         </div>
       </div>
 
+      {/* Barra inferior */}
       <div className="footer-bottom-bar">
-        <p className="footer-copy">© {new Date().getFullYear()} El Rey de las Ojotas. Todos los derechos reservados.</p>
+        <div className="footer-bottom-info">
+          <p>© {new Date().getFullYear()} El Rey de las Ojotas. Todos los derechos reservados.</p>
+          <span className="footer-separator">·</span>
+          <p>Buenos Aires, Argentina</p>
+        </div>
+
+        <p className="footer-credits">
+          Diseño y desarrollo web por{" "}
+          <a
+            href="https://wa.me/54911XXXXXXXX?text=Hola%20Lean,%20vi%20la%20web%20de%20El%20Rey%20de%20las%20Ojotas%20y%20me%20gustaría%20cotizar%20un%20sitio%20web."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-credits-link"
+          >
+            Lean Jaime
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="footer-external-icon"
+            >
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+              <polyline points="15 3 21 3 21 9" />
+              <line x1="10" x2="21" y1="14" y2="3" />
+            </svg>
+          </a>
+        </p>
       </div>
     </footer>
   );

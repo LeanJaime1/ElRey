@@ -113,3 +113,122 @@
     justify-content: center; /* Centra los íconos */
   }
 }
+
+.footer-bottom-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 2rem;
+  margin-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.footer-bottom-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  text-align: center;
+}
+
+.footer-separator {
+  display: none;
+  color: #475569;
+}
+
+.footer-credits {
+  text-align: center;
+}
+
+.footer-credits-link {
+  color: #e2e8f0;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: #334155;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.footer-credits-link:hover {
+  color: #0066cc;
+  text-decoration-color: #0066cc;
+}
+
+.footer-external-icon {
+  width: 0.75rem;
+  height: 0.75rem;
+  opacity: 0.7;
+}
+
+/* Pantallas medianas y grandes */
+@media (min-width: 640px) {
+  .footer-bottom-bar {
+    flex-direction: row;
+  }
+
+  .footer-bottom-info {
+    flex-direction: row;
+    gap: 0.75rem;
+    text-align: left;
+  }
+
+  .footer-separator {
+    display: inline;
+  }
+
+  .footer-credits {
+    text-align: center;
+  }
+}
+
+/* 1. Agregamos un padding-bottom extra al contenedor del footer */
+.footer {
+  /* Mantené tus propiedades actuales y asegurate de tener buen padding abajo */
+  padding-bottom: 5.5rem; /* Deja espacio vertical libre para que el botón flotante no tape nada */
+}
+
+/* 2. Ajustamos la barra inferior para darle margen derecho en pantallas grandes */
+.footer-bottom-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 2rem;
+  margin-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+@media (min-width: 640px) {
+  .footer {
+    padding-bottom: 3rem; /* En pantallas grandes con espacio lateral basta con 3rem */
+  }
+
+  .footer-bottom-bar {
+    flex-direction: row;
+    padding-right: 5rem; /* Margen a la derecha para no chocar con el botón fijo de WhatsApp */
+  }
+
+  .footer-bottom-info {
+    flex-direction: row;
+    gap: 0.75rem;
+    text-align: left;
+  }
+
+  .footer-separator {
+    display: inline;
+  }
+
+  .footer-credits {
+    text-align: right;
+  }
+}
