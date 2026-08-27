@@ -72,8 +72,7 @@ const Footer = () => {
         <p className="footer-credits">
           Diseño y desarrollo web por{" "}
           <a
-            href="https://wa.me/54911XXXXXXXX?text=Hola%20Lean,%20vi%20la%20web%20de%20El%20Rey%20de%20las%20Ojotas%20y%20me%20gustaría%20cotizar%20un%20sitio%20web."
-            target="_blank"
+            href="https://portfolio-mu-six-jk4yrpz8o1.vercel.app/"
             rel="noopener noreferrer"
             className="footer-credits-link"
           >
