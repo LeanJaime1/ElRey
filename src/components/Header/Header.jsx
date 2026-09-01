@@ -12,12 +12,12 @@ const Header = () => {
 
   useEffect(() => {
     if (menuOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     }
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     };
   }, [menuOpen]);
 
@@ -46,16 +46,12 @@ const Header = () => {
     e.preventDefault();
     setMenuOpen(false);
 
-    
     if (location.pathname === "/") {
-  
       handleNavigation("hero");
-      
       if (location.hash) {
-          navigate("/", { replace: true });
+        navigate("/", { replace: true });
       }
     } else {
-     
       handleNavigation("hero");
     }
   };
@@ -64,25 +60,38 @@ const Header = () => {
     <header className="header">
       {menuOpen && <div className="backdrop" onClick={toggleMenu}></div>}
 
-      <div className="logo-container" onClick={handleHomeNavigation} style={{ cursor: "pointer" }}>
-        <img src={logo} alt="El Rey de las Ojotas" className="logo-img" />
+      {/* Contenedor alineado con el ancho de Catalog */}
+      <div className="header-container">
+        <div
+          className="logo-container"
+          onClick={handleHomeNavigation}
+          style={{ cursor: "pointer" }}
+        >
+          <img src={logo} alt="El Rey de las Ojotas" className="logo-img" />
+        </div>
+
+        <nav className={`nav ${menuOpen ? "open" : ""}`}>
+          <a href="/" onClick={handleHomeNavigation}>
+            Inicio
+          </a>
+          <Link to="/quienes-somos" onClick={() => setMenuOpen(false)}>
+            Quiénes somos
+          </Link>
+          <Link to="/#contacto" onClick={() => setMenuOpen(false)}>
+            Contacto
+          </Link>
+        </nav>
+
+        <button
+          className={`hamburger ${menuOpen ? "open" : ""}`}
+          onClick={toggleMenu}
+          aria-label="Toggle menu"
+        >
+          <span className="bar"></span>
+          <span className="bar"></span>
+          <span className="bar"></span>
+        </button>
       </div>
-
-      <nav className={`nav ${menuOpen ? "open" : ""}`}>
-        <a href="/" onClick={handleHomeNavigation}>Inicio</a>
-        <Link to="/quienes-somos" onClick={() => setMenuOpen(false)}>Quiénes somos</Link>
-        <Link to="/#contacto" onClick={() => setMenuOpen(false)}>Contacto</Link>
-      </nav>
-
-      <button
-        className={`hamburger ${menuOpen ? "open" : ""}`}
-        onClick={toggleMenu}
-        aria-label="Toggle menu"
-      >
-        <span className="bar"></span>
-        <span className="bar"></span>
-        <span className="bar"></span>
-      </button>
     </header>
   );
 };
