@@ -72,7 +72,7 @@ const Footer = () => {
         <p className="footer-credits">
           Diseño y desarrollo web por{" "}
           <a
-            href="https://leandrojaime.com"
+            href="https://leandrojaime.com.ar"
             rel="noopener noreferrer"
             className="footer-credits-link"
           >
