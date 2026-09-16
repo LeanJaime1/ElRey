@@ -55,8 +55,8 @@ const categoriesData = [
       { src: img1, name: "Personalizadas", description: "Goma Eva 16 mm de espesor, tira pvc, Suela Antideslizante. Colores varios." },
       { src: img2, name: "Personalizadas", description: "Goma Eva 16 mm de espesor, tira pvc, Suela Antideslizante. Colores varios." },
       { src: img11, name: "Lisas", description: "Goma Eva 16 mm, tira pvc, suela Antideslizante. Colores varios." },
-      { src: img15, name: "Chinela con faja lisas", description: "Ojotas para sublimar de goma Eva 16 mm de espesor tira de PVC, superficie a estampar  %100 polister. Talles del 19 al 46 colores varios" },
-      { src: img19, name: "Chinela con faja lisas", description: "Lisas, talles del 35 al 46." },
+      { src: img15, name: "Chinela con faja lisas", description: "Suela PVC, faja cuero sintético de 2.5mm, talles del 27 al 46." },
+      { src: img19, name: "Chinela con faja lisas", description: "Suela PVC, faja cuero sintético de 2.5mm, talles del 27 al 46." },
       { src: img4, name: "Lisas", description: "Goma Eva 16 mm, tira pvc, suela Antideslizante. Colores varios." },
       { src: img9, name: "Lisas", description: "Goma Eva 16 mm, tira pvc, suela Antideslizante. Colores varios." },
       { src: img3, name: "Descartables", description: "Goma Eva 3mm suela Antideslizante." },
@@ -69,9 +69,9 @@ const categoriesData = [
     path: "clubes",
     cardImg: clubesCardImg,
     galleryImages: [
-      { src: img16, name: "Niño", description: "Goma Eva 16 mm de espesor, tira pvc, Suela Antideslizante. Colores varios." },
-      { src: img18, name: "Niño", description: "Goma Eva 16 mm de espesor, tira pvc, Suela Antideslizante. Colores varios." },
-      { src: img14, name: "Adulto", description: "Goma Eva 16 mm de espesor, tira pvc, Suela Antideslizante. Colores varios." },
+      { src: img16, name: "Niño", description: "Ojotas de faja, talles del 27 al 34. Base PVC, expansor y faja de cuero sintético, cocidas con forro de goma espuma super acolchadas." },
+      { src: img18, name: "Niño", description: "Ojotas de faja, talles del 27 al 34. Base PVC, expansor y faja de cuero sintético, cocidas con forro de goma espuma super acolchadas." },
+      { src: img14, name: "Adulto", description: "Ojotas de faja, talles del 35 al 46. Base PVC, expansor y faja de cuero sintético, cocidas con forro de goma espuma super acolchadas." },
     ],
   },
 ];
