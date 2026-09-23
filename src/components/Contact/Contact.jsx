@@ -166,7 +166,7 @@ const Contact = () => {
           </option>
           <option value="empresas">Empresas</option>
           <option value="eventos">Eventos</option>
-          <option value="hotel/spa">Hotel/Spa</option>
+          <option value="hotel/spa">Clubes</option>
         </select>
         {errors.categoria && <p className="error">{errors.categoria}</p>}
 
