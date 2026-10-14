@@ -4,8 +4,6 @@ Landing comercial para una fábrica de ojotas personalizadas, pensada para souve
 
 ## 🔗 **Demo:** https://elreydelasojotas.com.ar
 
-![Captura del sitio](./captura.png)
-
 ## ✨ Características
 - Diseño responsive (mobile y desktop) maquetado con CSS puro
 - Formulario de contacto y botón de WhatsApp como canales directos de venta
@@ -13,7 +11,7 @@ Landing comercial para una fábrica de ojotas personalizadas, pensada para souve
 - Publicado en Vercel
 
 ## 🛠️ Tecnologías
-React · CSS · Git · Vercel
+React · TailwindCSS · Git · Vercel
 
 ## 📈 Resultado
 Cliente real: el sitio recibe consultas de forma constante y ha concretado ventas a través de la web.
